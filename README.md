@@ -1,4 +1,4 @@
-﻿# Web Developer's Portfolio 
+﻿# BuddyBeacon Maps 
 **Contributors:** wpkaren  
 **Donate Link:** https://karenattfield.com/giving/
 **Tags:** google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode
