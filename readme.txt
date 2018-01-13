@@ -50,7 +50,7 @@ Yes, in order to retrieve your beacon information including dates, locations and
 
 = Can I put more than one map on each page/post? =
 
-At this stage the plugin functionality is limited to one map per page or post (though you can have them on multiple pages / posts).
+Yes, you can add as many shortcodes per page/ post as you want, displaying as many maps as you want.
 
 = Can you add... =
 
