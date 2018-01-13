@@ -1,0 +1,86 @@
+/**
+* CSS for admin-specific functionality
+*/
+
+.bb-list li {
+	list-style-type: decimal;
+	margin-left: 1em;
+}
+
+.bb-form-table {
+	width: 100%;
+}
+
+.bb-table-heading {
+	font-size: 1.4em;
+}
+
+#maps_form_meta_box .hndle {
+	padding-left: 0.25em;
+}
+
+#manage-maps .tablenav-pages-navspan {
+	background: auto !important;
+	height: auto !important;
+}
+
+input[name="maptitle"] {
+	width: 95%;
+}
+
+input[name="stroke_weight"] {
+	width: 50%;
+}
+
+
+input[type="color"] {
+	border: 1px solid #f9f9f9;
+	height: 32px;
+	-webkit-appearance: none;
+	width: 32px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
+#add-map-page .form-table th {
+	width: 25%;
+}
+
+#add-map-page .form-table {
+	width:100%;
+}
+
+#add-map-page .table-heading {
+	font-size: 1.4em;
+}
+
+#mapwidth, #mapheight, #stroke_weight, #number_beacons, #daterange_from, #daterange_to {
+	max-width: 25%;
+}
+
+#mapwidth_type, #mapheight_type, #beacon_opacity, #alignment, #type, #beacon_shape, #dateend_choice {
+	width: auto;
+}
+
+
+/* Datetimepicker styles */
+
+.bootstrap-datetimepicker-widget .dow {
+    width: 14.2857% !important;
+}
+ 
+.bootstrap-datetimepicker-widget .dow:first-of-type {
+    width: 2px !important;
+}
+
+.bootstrap-datetimepicker-widget thead tr:first-child th {
+    width: auto !important;
+}
+
+

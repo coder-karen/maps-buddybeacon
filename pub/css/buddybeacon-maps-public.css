@@ -1,0 +1,46 @@
+/**
+ * CSS for the public-facing functionality
+ */
+
+.map-canvas {
+	height: 500px;
+	margin: 10px 10px 0;
+	width: 100%;
+}
+
+
+.map-summary {
+	text-align:center;
+}
+
+.map-footer {
+	margin: 0 10px 10px;
+	padding:0;
+}
+
+
+.map-footer-title {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom:5px;
+	/*padding-top:5px;*/
+	margin-top:0 !important;
+	padding: 5px 5px 0;
+	text-decoration:underline;
+}
+
+.map-footer-text {
+	font-size: 12px;
+	font-weight: bold;
+	line-height:12px;
+	margin-bottom:0;
+	padding: 0 5px;
+}
+
+.bb-map-footer-distance {
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 0;
+	/*padding-bottom: 5px;*/
+	padding: 0 5px 5px;
+}
