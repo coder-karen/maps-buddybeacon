@@ -1,7 +1,7 @@
 ﻿# BuddyBeacon Maps 
 **Contributors:** wpkaren  
-**Donate Link:** https://karenattfield.com/giving/
-**Tags:** google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode
+**Donate Link:** https://karenattfield.com/giving/  
+**Tags:** google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode  
 **Requires at least:** 4.4  
 **Tested up to:** 5.0  
 **Stable tag:** 0.1.0  
