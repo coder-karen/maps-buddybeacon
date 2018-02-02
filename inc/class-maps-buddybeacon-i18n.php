@@ -8,7 +8,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  */
 
@@ -19,11 +19,11 @@
  * so that it is ready for translation.
  *
  * @since      0.1.0
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  * @author     Karen Attfield <mail@karenattfield.com>
  */
-class BuddyBeacon_Maps_i18n {
+class Maps_BuddyBeacon_i18n {
 
 
 	/**
@@ -34,7 +34,7 @@ class BuddyBeacon_Maps_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'buddybeacon-maps',
+			'maps-buddybeacon',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

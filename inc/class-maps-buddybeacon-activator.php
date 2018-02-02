@@ -4,7 +4,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  */
 
@@ -14,12 +14,12 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      0.1.0
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  * @author     Karen Attfield <mail@karenattfield.com>
  */
 
-class BuddyBeacon_Maps_Activator {
+class Maps_BuddyBeacon_Activator {
 
 	/**
 	 * Our activate function that sets up a table and all relevant rows in the database.

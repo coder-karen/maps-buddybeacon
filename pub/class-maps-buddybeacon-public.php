@@ -5,7 +5,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Public
  */
 
@@ -15,13 +15,13 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Public
  * @author     Karen Attfield <mail@karenattfield.com>
  */
 	
 
-class BuddyBeacon_Maps_Public {
+class Maps_BuddyBeacon_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -63,7 +63,7 @@ class BuddyBeacon_Maps_Public {
 	 *
 	 * @since  0.1.0
 	 */
-	public function buddybeacon_maps_shortcode($atts) {
+	public function maps_buddybeacon_shortcode($atts) {
 
 			 if (isset ($atts)) {
 			 
@@ -84,7 +84,7 @@ class BuddyBeacon_Maps_Public {
 	            // foreach($mapid as $id) {
 	            // 	var_dump($id);
 	            // }
-            	$googleapi = get_option('buddybeacon-maps-settings')['buddybeacon-maps_googleapi'];
+            	$googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
 
 	            //Map variables
 	            $item = $this->get_map_variables($mapid);
@@ -240,9 +240,9 @@ class BuddyBeacon_Maps_Public {
 
 
 		//Variables from the map settings page needed to make a call to the ViewRanger API.
-		$vrkey = get_option('buddybeacon-maps-settings')['buddybeacon-maps_viewrangerapi'];
-		$username = get_option('buddybeacon-maps-settings')['buddybeacon-maps_bbuser'];
-		$pin = get_option('buddybeacon-maps-settings')['buddybeacon-maps_bbpin'];
+		$vrkey = get_option('maps-buddybeacon-settings')['maps-buddybeacon_viewrangerapi'];
+		$username = get_option('maps-buddybeacon-settings')['maps-buddybeacon_bbuser'];
+		$pin = get_option('maps-buddybeacon-settings')['maps-buddybeacon_bbpin'];
 		$service = 'getBBPositions';
 
 		//Accessing the database to pull the row that matches the id in the shortcode
@@ -380,7 +380,7 @@ class BuddyBeacon_Maps_Public {
     public function register_shortcodes($atts) {
 
     	ob_start();
-		add_shortcode( 'bb_maps', array( $this, 'buddybeacon_maps_shortcode') );
+		add_shortcode( 'bb_maps', array( $this, 'maps_buddybeacon_shortcode') );
 		return ob_get_clean();
 
 	}
@@ -393,7 +393,7 @@ class BuddyBeacon_Maps_Public {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/buddybeacon-maps-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/maps-buddybeacon-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -424,7 +424,7 @@ class BuddyBeacon_Maps_Public {
 	 */
 	public function enqueue_scripts() {
 
-		$googleapi = get_option('buddybeacon-maps-settings')['buddybeacon-maps_googleapi'];
+		$googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
 
 		if (($googleapi)  != '') {
 
@@ -434,7 +434,7 @@ class BuddyBeacon_Maps_Public {
 
 			wp_enqueue_script('jquery-script-time-moment', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js');
 
-			wp_register_script( 'buddybeacon-js', plugin_dir_url( __FILE__ ) . 'js/buddybeacon-maps-public.js', array(), time(), true );
+			wp_register_script( 'buddybeacon-js', plugin_dir_url( __FILE__ ) . 'js/maps-buddybeacon-public.js', array(), time(), true );
 						
 			$url = 'https://maps.googleapis.com/maps/api/js?key='.$googleapi.'&libraries=geometry&callback=initMap&format=json';
 		

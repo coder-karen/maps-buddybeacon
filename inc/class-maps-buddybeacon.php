@@ -7,7 +7,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  */
 
@@ -21,12 +21,12 @@
  * version of the plugin.
  *
  * @since      0.1.0
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  * @author     Karen Attfield <mail@karenattfield.com>
  */
 
-class BuddyBeacon_Maps {
+class Maps_BuddyBeacon {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -34,7 +34,7 @@ class BuddyBeacon_Maps {
 	 *
 	 * @since    0.1.0
 	 * @access   protected
-	 * @var      BuddyBeacon_Maps_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Maps_BuddyBeacon_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -67,9 +67,9 @@ class BuddyBeacon_Maps {
 	 */
 	public function __construct() {
 
-		if ( defined( 'BUDDYBEACON_MAPS_VERSION' ) ) {
+		if ( defined( 'MAPS_BUDDYBEACON_VERSION' ) ) {
 
-			$this->version = BUDDYBEACON_MAPS_VERSION;
+			$this->version = MAPS_BUDDYBEACON_VERSION;
 
 		} 
 
@@ -78,7 +78,7 @@ class BuddyBeacon_Maps {
 			$this->version = '1.0.0';
 		}
 
-		$this->plugin_name = 'buddybeacon-maps';
+		$this->plugin_name = 'maps-buddybeacon';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -92,10 +92,10 @@ class BuddyBeacon_Maps {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - BuddyBeacon_Maps_Loader. Orchestrates the hooks of the plugin.
-	 * - BuddyBeacon_Maps_i18n. Defines internationalization functionality.
-	 * - BuddyBeacon_Maps_Admin. Defines all hooks for the admin area.
-	 * - BuddyBeacon_Maps_Public. Defines all hooks for the public side of the site.
+	 * - Maps_BuddyBeacon_Loader. Orchestrates the hooks of the plugin.
+	 * - Maps_BuddyBeacon_i18n. Defines internationalization functionality.
+	 * - Maps_BuddyBeacon_Admin. Defines all hooks for the admin area.
+	 * - Maps_BuddyBeacon_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -109,33 +109,33 @@ class BuddyBeacon_Maps {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inc/class-buddybeacon-maps-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inc/class-maps-buddybeacon-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inc/class-buddybeacon-maps-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inc/class-maps-buddybeacon-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-buddybeacon-maps-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-maps-buddybeacon-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'pub/class-buddybeacon-maps-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'pub/class-maps-buddybeacon-public.php';
 
-		$this->loader = new BuddyBeacon_Maps_Loader();
+		$this->loader = new Maps_BuddyBeacon_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the BuddyBeacon_Maps_i18n class in order to set the domain and to register the hook
+	 * Uses the Maps_BuddyBeacon_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    0.1.0
@@ -143,7 +143,7 @@ class BuddyBeacon_Maps {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new BuddyBeacon_Maps_i18n();
+		$plugin_i18n = new Maps_BuddyBeacon_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -158,7 +158,7 @@ class BuddyBeacon_Maps {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new BuddyBeacon_Maps_Admin( $this->get_plugin_name(), $this->get_version() ) ;
+		$plugin_admin = new Maps_BuddyBeacon_Admin( $this->get_plugin_name(), $this->get_version() ) ;
 
 		// Hook our scripts and styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -185,7 +185,7 @@ class BuddyBeacon_Maps {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new BuddyBeacon_Maps_Public( $this->get_plugin_name(), $this->get_version());
+		$plugin_public = new Maps_BuddyBeacon_Public( $this->get_plugin_name(), $this->get_version());
 
 		// Hook our scripts and styles
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -228,7 +228,7 @@ class BuddyBeacon_Maps {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     0.1.0
-	 * @return    BuddyBeacon_Maps_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Maps_BuddyBeacon_Loader    Orchestrates the hooks of the plugin.
 	 */
 
 	public function get_loader() {

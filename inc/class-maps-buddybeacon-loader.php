@@ -5,7 +5,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  */
 
@@ -16,11 +16,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  * @author     Karen Attfield <mail@karenattfield.com>
  */
-class BuddyBeacon_Maps_Loader {
+class Maps_BuddyBeacon_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

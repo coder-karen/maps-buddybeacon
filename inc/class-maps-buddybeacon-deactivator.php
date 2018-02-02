@@ -5,7 +5,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  */
 
@@ -15,11 +15,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      0.1.0
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Inc
  * @author  Karen Attfield <mail@karenattfield.com>
  */
-class BuddyBeacon_Maps_Deactivator {
+class Maps_BuddyBeacon_Deactivator {
 
 	/**
 	 * Our deactivation function that cleans up anything temporary.

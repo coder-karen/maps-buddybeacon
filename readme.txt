@@ -1,4 +1,4 @@
-﻿=== BuddyBeacon Maps ===
+﻿=== Maps for BuddyBeacon ===
 Contributors: wpkaren
 Donate Link: https://karenattfield.com/giving/
 Tags: google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode
@@ -12,7 +12,7 @@ Serving map tracks in real time via ViewRanger BuddyBeacon.
 
 == Description ==
 
-BuddyBeacon Maps is a plugin that allows you to display map tracks over a set time period or live via ViewRanger's BuddyBeacon capability. The markers are shown on a Google Map, with an optional info box displaying map title, date range and distance covered. Info Windows provide information for each beacon (date, altitude, longitude and latitude).
+Maps for BuddyBeacon is a plugin that allows you to display map tracks over a set time period or live via ViewRanger's BuddyBeacon capability. The markers are shown on a Google Map, with an optional info box displaying map title, date range and distance covered. Info Windows provide information for each beacon (date, altitude, longitude and latitude).
 
 Customization options range from map type (eg. roadmap, satellite, terrain, hybrid), to beacon and route colours, beacon shape, and map alignment and size. 
 
@@ -34,9 +34,9 @@ To display a map in a page or post just add the shortcode: [bb_maps id="{id}"] w
 == Installation ==
 
 
-1. Upload `buddybeacon-maps` to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload `maps-buddybeacon` to the `/wp-content/plugins/` directory, or install the plugin through the WordPress plugins screen directly.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
-1. Go to the BuddyBeacon Maps main menu page, where you will be guided through how to create your first map. in the admin to set whether you'd like each portfolio item to be available on a page of it's own by default.
+1. Go to the Maps for BuddyBeacon main menu page, where you will be guided through how to create your first map. in the admin to set whether you'd like each portfolio item to be available on a page of it's own by default.
 
 
 == Frequently Asked Questions ==

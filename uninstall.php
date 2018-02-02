@@ -5,7 +5,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -22,7 +22,7 @@ function delete_tables() {
 
 }
 
-$settings_option = 'buddybeacon-maps-settings'; 
+$settings_option = 'maps-buddybeacon-settings'; 
 $delete_option = 'delete_array';
 delete_option($settings_option);
  // for site options in Multisite

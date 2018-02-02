@@ -1,12 +1,11 @@
 <?php
 /**
- * Creates the 'add map' sub-menu settings page
+ * Creates the 'map settings' sub-menu settings page
  *
- * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Admin/Partials
  */
 
@@ -20,18 +19,20 @@ if (!current_user_can('manage_options')) {
 
 ?>
 
-<h1><?php echo $GLOBALS['title'] ?></h1>
+<h1><?php _e('Maps for BuddyBeacon ', 'maps-buddybeacon'); echo $GLOBALS['title'] ?></h1>
 <hr>
 <div id="wrap">
 	<form method="post" action="options.php">
-
+		
 		<?php
-	
-			settings_fields( 'buddybeacon-maps-add-settings' );
-			do_settings_sections( 'buddybeacon-maps-add-settings' );  
+
+			settings_errors(); 
+			settings_fields( 'maps-buddybeacon-settings' );
+			do_settings_sections( 'maps-buddybeacon-settings' );
 			submit_button();
 
-		?>
+    	?>
 
 	</form>
+
 </div>

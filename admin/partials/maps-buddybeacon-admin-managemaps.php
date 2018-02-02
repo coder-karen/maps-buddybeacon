@@ -5,7 +5,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Admin/Partials
  */
 
@@ -20,12 +20,12 @@ if (!current_user_can('manage_options')) {
 ?>
 
 
-<h1><?php _e('Manage Maps', 'buddybeacon-maps'); ?>
+<h1><?php _e('Manage Maps', 'maps-buddybeacon'); ?>
 <div class="icon32 icon32-posts-post" id="icon-edit"><br></div>
 </h1>
 <div class="wrap">
 	<h1>
-	   <a class="add-new-h2" href="<?php echo get_admin_url(get_current_blog_id(), 'admin.php?page=buddybeacon-add-map');?>"><?php _e('Add new map', 'buddybeacon-maps')?></a>
+	   <a class="add-new-h2" href="<?php echo get_admin_url(get_current_blog_id(), 'admin.php?page=buddybeacon-add-map');?>"><?php _e('Add new map', 'maps-buddybeacon')?></a>
 	</h1>
 
 	<div id="poststuff">

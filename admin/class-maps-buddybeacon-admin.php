@@ -4,7 +4,7 @@
  *
  * @since      0.1.0
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Admin
  */
 
@@ -14,7 +14,7 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    BuddyBeacon_Maps
+ * @package    Maps_BuddyBeacon
  * @subpackage Admin
  * @author     Karen Attfield <mail@karenattfield.com>
  */
@@ -23,7 +23,7 @@
 include_once( 'class-maps-list-table.php' );
 
 
-class BuddyBeacon_Maps_Admin {
+class Maps_BuddyBeacon_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -79,12 +79,12 @@ class BuddyBeacon_Maps_Admin {
 		$icon = 'dashicons-location-alt';
 
 		if( version_compare( $GLOBALS['wp_version'], '3.8', '<' ) ) {
-			$icon = plugin_dir_url() . '/buddybeacon-maps/assets/menu-icon.png';
+			$icon = plugin_dir_url() . '/maps-buddybeacon/assets/menu-icon.png';
 		}
 	
 		$this->plugin_screen_hook_suffix = add_menu_page(
-			__( 'BuddyBeacon Maps Settings', 'buddybeacon-maps' ),
-			__( 'BuddyBeacon Maps', 'buddybeacon-maps' ),
+			__( 'Maps for BuddyBeacon Settings', 'maps-buddybeacon' ),
+			__( 'Maps for BuddyBeacon', 'maps-buddybeacon' ),
 			'manage_options',
 			'buddybeacon-map-settings',
 			array( $this, 'display_explanations_page' ), $icon
@@ -92,8 +92,8 @@ class BuddyBeacon_Maps_Admin {
 
 		$this->plugin_screen_hook_suffix = add_submenu_page(
 			'buddybeacon-map-settings', 
-			__( 'How to use', 'buddybeacon-maps' ),  
-			__( 'How to use', 'buddybeacon-maps' ), 
+			__( 'How to use', 'maps-buddybeacon' ),  
+			__( 'How to use', 'maps-buddybeacon' ), 
 			'manage_options', 
 		 'buddybeacon-map-settings',
 			array( $this, 'display_explanations_page' ) 
@@ -101,8 +101,8 @@ class BuddyBeacon_Maps_Admin {
 
 		$this->plugin_screen_hook_suffix = add_submenu_page(
 			'buddybeacon-map-settings',
-			__( 'Add Map', 'buddybeacon-maps' ),
-			__( 'Add Map', 'buddybeacon-maps' ),
+			__( 'Add Map', 'maps-buddybeacon' ),
+			__( 'Add Map', 'maps-buddybeacon' ),
 			'manage_options',
 		 'buddybeacon-add-map',
 			array( $this, 'display_addmap_subpage' )
@@ -110,23 +110,23 @@ class BuddyBeacon_Maps_Admin {
 
 		$page_hook = add_submenu_page(
 			'buddybeacon-map-settings',
-			__( 'Manage Maps', 'buddybeacon-maps' ),
-			__( 'Manage Maps', 'buddybeacon-maps' ),
+			__( 'Manage Maps', 'maps-buddybeacon' ),
+			__( 'Manage Maps', 'maps-buddybeacon' ),
 			'manage_options',
 		 'buddybeacon-manage-maps',
 			array( $this, 'display_managemaps_subpage' )  
 		);
 
 
-		add_action( 'load-'.$page_hook, array( $this, 'buddybeacon_maps_register_manage_maps_setting' ) );
+		add_action( 'load-'.$page_hook, array( $this, 'maps_buddybeacon_register_manage_maps_setting' ) );
 		
 
 		$this->plugin_screen_hook_suffix = add_submenu_page(
 			'buddybeacon-map-settings',
-			__( 'Settings', 'buddybeacon-maps' ),
-			__( 'Settings', 'buddybeacon-maps' ),
+			__( 'Settings', 'maps-buddybeacon' ),
+			__( 'Settings', 'maps-buddybeacon' ),
 			'manage_options',
-		 'buddybeacon-maps-settings',
+		 'maps-buddybeacon-settings',
 			array( $this, 'display_mapsettings_subpage' )
 		);
 	
@@ -141,7 +141,7 @@ class BuddyBeacon_Maps_Admin {
 	 */
 	public function display_explanations_page() {
 
-		include_once 'partials/buddybeacon-maps-admin-settings.php';
+		include_once 'partials/maps-buddybeacon-admin-settings.php';
 
 	}
 
@@ -205,13 +205,13 @@ class BuddyBeacon_Maps_Admin {
 
                 if ($result) {
 
-                    $message = __('Map was successfully saved', 'buddybeacon-maps');
+                    $message = __('Map was successfully saved', 'maps-buddybeacon');
 
                 } 
 
                 else {
 
-                    $notice = __('There was an error while saving the map', 'buddybeacon-maps');
+                    $notice = __('There was an error while saving the map', 'maps-buddybeacon');
 
                 }
             } 
@@ -222,13 +222,13 @@ class BuddyBeacon_Maps_Admin {
 
                 if (false === $result) {
 
-                    $notice = __('There was an error while updating item', 'buddybeacon-maps');
+                    $notice = __('There was an error while updating item', 'maps-buddybeacon');
 
                 } 
 
                 else {
 
-                    $message = __('Item was successfully updated', 'buddybeacon-maps');
+                    $message = __('Item was successfully updated', 'maps-buddybeacon');
 
                 }
             }
@@ -256,7 +256,7 @@ class BuddyBeacon_Maps_Admin {
             if (!$item) {
 
                 $item = $default;
-                $notice = __('Map not found', 'buddybeacon-maps');
+                $notice = __('Map not found', 'maps-buddybeacon');
 
             }
         }
@@ -264,16 +264,16 @@ class BuddyBeacon_Maps_Admin {
     }
          
     // Here we adding our custom meta box
-    add_meta_box('maps_form_meta_box', __( 'Map Information', 'buddybeacon-maps' ), array(&$this, 'buddybeacon_maps_form_meta_box_handler'), 'buddybeacon-add-map', 'normal', 'default');
+    add_meta_box('maps_form_meta_box', __( 'Map Information', 'maps-buddybeacon' ), array(&$this, 'maps_buddybeacon_form_meta_box_handler'), 'buddybeacon-add-map', 'normal', 'default');
 
     ?>
     
-    <h1><?php _e('Add Map','buddybeacon-maps')?>
+    <h1><?php _e('Add Map','maps-buddybeacon')?>
     <div class="icon32 icon32-posts-post" id="icon-edit" style="margin-bottom: 1em;"><br></div>
     </h1>
     <div class="wrap">
         <h1>
-            <a class="add-new-h2" href="<?php echo get_admin_url(get_current_blog_id(), 'admin.php?page=buddybeacon-add-map');?>"><?php _e('Add new map', 'buddybeacon-maps')?></a>
+            <a class="add-new-h2" href="<?php echo get_admin_url(get_current_blog_id(), 'admin.php?page=buddybeacon-add-map');?>"><?php _e('Add new map', 'maps-buddybeacon')?></a>
         </h1>
 
 
@@ -295,7 +295,7 @@ class BuddyBeacon_Maps_Admin {
                         <?php /* And here we call our custom meta box */  ?>
                         <?php do_meta_boxes('buddybeacon-add-map', 'normal', $item ); 
                         ?>
-                        <input type="submit" value="<?php _e('Save', 'buddybeacon-maps')?>" id="submit" class="button-primary" name="submit">
+                        <input type="submit" value="<?php _e('Save', 'maps-buddybeacon')?>" id="submit" class="button-primary" name="submit">
                     </div>
                 </div>
             </div> <!-- end #settings-pages -->
@@ -312,7 +312,7 @@ class BuddyBeacon_Maps_Admin {
      *
      * @param $item
      */
-    public function buddybeacon_maps_form_meta_box_handler($item) {
+    public function maps_buddybeacon_form_meta_box_handler($item) {
 
         ?>
         <!-- Map data table -->
@@ -327,7 +327,7 @@ class BuddyBeacon_Maps_Admin {
 
                     <tr class="form-field">
                         <th valign="top" scope="row">
-                            <label for="id"><?php _e('Map Shortcode', 'buddybeacon-maps')?></label>
+                            <label for="id"><?php _e('Map Shortcode', 'maps-buddybeacon')?></label>
                         </th>
                         <td>
                             <small> [bb_maps id="<?php echo $item['id']; ?>"]</small>            
@@ -341,21 +341,21 @@ class BuddyBeacon_Maps_Admin {
             	<!-- Form field for map title -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="maptitle"><?php _e('Map Title', 'buddybeacon-maps')?></label>
+                        <label for="maptitle"><?php _e('Map Title', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="maptitle" name="maptitle" type="text" value="<?php echo esc_attr($item['maptitle'])?>"
-                               size="50" class="code" placeholder="<?php _e('Map Title', 'buddybeacon-maps')?>" required>
+                               size="50" class="code" placeholder="<?php _e('Map Title', 'maps-buddybeacon')?>" required>
                     </td>
                 </tr>
 
                 <!-- Form field for map width -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="mapwidth"><?php _e('Map Width', 'buddybeacon-maps')?></label>
+                        <label for="mapwidth"><?php _e('Map Width', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
-                        <input id="mapwidth" name="mapwidth" type="text" value="<?php if (esc_attr($item['mapwidth']) == 0 ) echo ''; else echo esc_attr($item['mapwidth']) ?>"  size="50" class="code" placeholder="<?php _e('Map Width', 'buddybeacon-maps')?>" >
+                        <input id="mapwidth" name="mapwidth" type="text" value="<?php if (esc_attr($item['mapwidth']) == 0 ) echo ''; else echo esc_attr($item['mapwidth']) ?>"  size="50" class="code" placeholder="<?php _e('Map Width', 'maps-buddybeacon')?>" >
             	        <select id="mapwidth_type" name="mapwidth_type">
                             <option value="%" <?php if ($item['mapwidth_type'] === '%') echo 'selected="true"' ?> >%</option>
         	                <option value="px" <?php if ($item['mapwidth_type'] === 'px') echo 'selected="true"' ?>>px</option>
@@ -368,10 +368,10 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for map height -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="mapheight"><?php _e('Map Height', 'buddybeacon-maps')?></label>
+                        <label for="mapheight"><?php _e('Map Height', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
-                        <input id="mapheight" name="mapheight" type="text" value="<?php if (esc_attr($item['mapheight']) == 0 ) echo ''; else echo esc_attr($item['mapheight']) ?>"  size="50" class="code" placeholder="<?php _e('Map Height', 'buddybeacon-maps')?>">
+                        <input id="mapheight" name="mapheight" type="text" value="<?php if (esc_attr($item['mapheight']) == 0 ) echo ''; else echo esc_attr($item['mapheight']) ?>"  size="50" class="code" placeholder="<?php _e('Map Height', 'maps-buddybeacon')?>">
                         <select id="mapheight_type" name="mapheight_type">
                             <option value="px" <?php if ($item['mapheight_type'] === 'px') echo 'selected="true"' ?> >px</option>
                             <option value="%" <?php if ($item['mapheight_type'] === '%') echo 'selected="true"' ?> >%</option>
@@ -383,14 +383,14 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for map alignment -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="alignment"><?php _e('Map Alignment', 'buddybeacon-maps')?></label>
+                        <label for="alignment"><?php _e('Map Alignment', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <select id="alignment" name="alignment">
-                            <option value="Left" <?php if ($item['alignment'] === 'Left') echo 'selected="true"' ?> ><?php _e('Left', 'buddybeacon-maps')?></option>
-                            <option value="Right" <?php if ($item['alignment'] === 'Right') echo 'selected="true"' ?> ><?php _e('Right', 'buddybeacon-maps')?></option>
-                            <option value="Center" <?php if ($item['alignment'] === 'Center') echo 'selected="true"' ?> ><?php _e('Center', 'buddybeacon-maps')?></option>
-                            <option value="None" <?php if ($item['alignment'] === 'None') echo 'selected="true"' ?> ><?php _e('None', 'buddybeacon-maps')?></option>
+                            <option value="Left" <?php if ($item['alignment'] === 'Left') echo 'selected="true"' ?> ><?php _e('Left', 'maps-buddybeacon')?></option>
+                            <option value="Right" <?php if ($item['alignment'] === 'Right') echo 'selected="true"' ?> ><?php _e('Right', 'maps-buddybeacon')?></option>
+                            <option value="Center" <?php if ($item['alignment'] === 'Center') echo 'selected="true"' ?> ><?php _e('Center', 'maps-buddybeacon')?></option>
+                            <option value="None" <?php if ($item['alignment'] === 'None') echo 'selected="true"' ?> ><?php _e('None', 'maps-buddybeacon')?></option>
                         </select>
                     </td>
                 </tr>
@@ -398,7 +398,7 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for map type -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="type"><?php _e('Map Type', 'buddybeacon-maps')?></label>
+                        <label for="type"><?php _e('Map Type', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <select id="type" name="type">
@@ -422,7 +422,7 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field to hide info box underneath map -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="info_box_display"><?php _e('Hide Info Box', 'buddybeacon-maps')?></label>
+                        <label for="info_box_display"><?php _e('Hide Info Box', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <!-- Here we are comparing stored value with 1. Stored value is 1 if user checks the checkbox otherwise empty string. -->
@@ -434,29 +434,29 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for info box background colour -->
                 <tr class="form-field info-box-info">
                     <th valign="top" scope="row">
-                        <label for="ib_background"><?php _e('Info Box Background Colour', 'buddybeacon-maps')?></label>
+                        <label for="ib_background"><?php _e('Info Box Background Colour', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="ib_background" name="ib_background" type="color"  value="<?php echo ($item['ib_background'])?>"
-                               size="100" class="code" placeholder="<?php _e('Info Box Background Colour', 'buddybeacon-maps')?>" required>
+                               size="100" class="code" placeholder="<?php _e('Info Box Background Colour', 'maps-buddybeacon')?>" required>
                     </td>
                 </tr>
 
                  <!-- Form field for info box text colour -->
                 <tr class="form-field info-box-info">
                     <th valign="top" scope="row">
-                        <label for="ib_text"><?php _e('Info Box Text Colour', 'buddybeacon-maps')?></label>
+                        <label for="ib_text"><?php _e('Info Box Text Colour', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="ib_text" name="ib_text" type="color"  value="<?php echo ($item['ib_text'])?>"
-                               size="100" class="code" placeholder="<?php _e('Info Box Text Colour', 'buddybeacon-maps')?>" required>
+                               size="100" class="code" placeholder="<?php _e('Info Box Text Colour', 'maps-buddybeacon')?>" required>
                     </td>
                 </tr>
 
                 <!-- Form field for info box distance measurement -->
                 <tr class="form-field info-box-info">
                     <th valign="top" scope="row">
-                        <label for="ib_distance"><?php _e('Info Box Distance Type', 'buddybeacon-maps')?></label>
+                        <label for="ib_distance"><?php _e('Info Box Distance Type', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <select id="ib_distance" name="ib_distance">
@@ -479,18 +479,18 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for beacon date range -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="daterange_from"><?php _e('Date Range', 'buddybeacon-maps')?></label>
+                        <label for="daterange_from"><?php _e('Date Range', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <p>Date/time from:</p>
-                        <input class="datechoice" id="daterange_from" name="daterange_from" type="text" size="100" class="code" placeholder="<?php _e('Start date', 'buddybeacon-maps')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_from'] ?>"><p>Date/time to:</p>
+                        <input class="datechoice" id="daterange_from" name="daterange_from" type="text" size="100" class="code" placeholder="<?php _e('Start date', 'maps-buddybeacon')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_from'] ?>"><p>Date/time to:</p>
                         <select id="dateend_choice" name="dateend_choice" autocomplete="off">
                             <option id="currentdate" value="currentdate" <?php if ($item['dateend_choice'] === 'currentdate') echo 'selected="true"' ?> >Current date</option>
                             <option id="selectdate" value="selectdate"  <?php if ($item['dateend_choice'] === 'selectdate') echo 'selected="true"' ?> > Select date</option>
                         </select>
 
                         <input class="datechoice" id="daterange_to" name="daterange_to" type="hidden"
-                       size="100" class="code" placeholder="<?php _e('End date', 'buddybeacon-maps')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_to'] ?>">
+                       size="100" class="code" placeholder="<?php _e('End date', 'maps-buddybeacon')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_to'] ?>">
                        
                     </td>
                 </tr>
@@ -498,11 +498,11 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for max number of beacons -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="number_beacons"><?php _e('Max. number beacons', 'buddybeacon-maps')?></label>
+                        <label for="number_beacons"><?php _e('Max. number beacons', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="number_beacons" name="number_beacons" type="text"  value="<?php if (esc_attr($item['number_beacons']) == 0 ) echo ''; else echo esc_attr($item['number_beacons'])?>"
-                               size="50" class="code" placeholder="<?php _e('Max. number beacons', 'buddybeacon-maps')?>">
+                               size="50" class="code" placeholder="<?php _e('Max. number beacons', 'maps-buddybeacon')?>">
                         <small> Maximum number of beacons to display. Default (empty) is no max.</small>
                     </td>
                 </tr>
@@ -510,24 +510,24 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for track colour -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="track_colour"><?php _e('Track Colour', 'buddybeacon-maps')?></label>
+                        <label for="track_colour"><?php _e('Track Colour', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="track_colour" name="track_colour" type="color"  value="<?php echo ($item['track_colour'])?>"
-                               size="100" class="code" placeholder="<?php _e('Track Colour', 'buddybeacon-maps')?>" required>
+                               size="100" class="code" placeholder="<?php _e('Track Colour', 'maps-buddybeacon')?>" required>
                     </td>
                 </tr>
 
                   <!-- Form field for deleting beacons -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="beacon_delete_lon"><?php _e('Delete Beacon', 'buddybeacon-maps')?></label>
+                        <label for="beacon_delete_lon"><?php _e('Delete Beacon', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="beacon_delete_lon" name="beacon_delete_lon" type="text"  value="<?php echo ($item['beacon_delete_lon'])?>"
-                               size="50" class="code" placeholder="<?php _e('Enter longitude of beacon', 'buddybeacon-maps')?>">
+                               size="50" class="code" placeholder="<?php _e('Enter longitude of beacon', 'maps-buddybeacon')?>">
                                 <input id="beacon_delete_lat" name="beacon_delete_lat" type="text"  value="<?php echo ($item['beacon_delete_lat'])?>"
-                               size="50" class="code" placeholder="<?php _e('Enter latitude of beacon', 'buddybeacon-maps')?>" >
+                               size="50" class="code" placeholder="<?php _e('Enter latitude of beacon', 'maps-buddybeacon')?>" >
                                <br/><small>Enter the latitude and longitude exactly as they appear in the map Info Window for the beacon you wish to delete.</small>
                     </td>
                 </tr>
@@ -544,7 +544,7 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for beacon shape -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="beacon_shape"><?php _e('Beacon Shape', 'buddybeacon-maps')?></label>
+                        <label for="beacon_shape"><?php _e('Beacon Shape', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <select id="beacon_shape" name="beacon_shape">
@@ -557,18 +557,18 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for beacon colour -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="beacon_colour"><?php _e('Beacon Colour', 'buddybeacon-maps')?></label>
+                        <label for="beacon_colour"><?php _e('Beacon Colour', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="beacon_colour" name="beacon_colour" type="color"  value="<?php echo ($item['beacon_colour'])?>"
-                               size="100" class="code" placeholder="<?php _e('Beacon Colour', 'buddybeacon-maps')?>" required>
+                               size="100" class="code" placeholder="<?php _e('Beacon Colour', 'maps-buddybeacon')?>" required>
                     </td>
                 </tr>
 
                 <!-- Form field for beacon opacity -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="beacon_opacity"><?php _e('Beacon Opacity', 'buddybeacon-maps')?></label>
+                        <label for="beacon_opacity"><?php _e('Beacon Opacity', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <select id="beacon_opacity" name="beacon_opacity">
@@ -591,11 +591,11 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for beacon stroke weight -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                    <label for="stroke_weight"><?php _e('Stroke Weight', 'buddybeacon-maps')?></label>
+                    <label for="stroke_weight"><?php _e('Stroke Weight', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="stroke_weight" name="stroke_weight" type="text" value="<?php echo esc_attr($item['stroke_weight'])?>"
-                               size="50" class="code" placeholder="<?php _e('Stroke Weight', 'buddybeacon-maps')?>" required>
+                               size="50" class="code" placeholder="<?php _e('Stroke Weight', 'maps-buddybeacon')?>" required>
             	       <small>Beacon border size, in px. Default is 0 (no border).</small>
                     </td>
                 </tr>
@@ -603,11 +603,11 @@ class BuddyBeacon_Maps_Admin {
                 <!-- Form field for beacon stroke colour -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <label for="stroke_colour"><?php _e('Stroke Colour', 'buddybeacon-maps')?></label>
+                        <label for="stroke_colour"><?php _e('Stroke Colour', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
                         <input id="stroke_colour" name="stroke_colour" type="color"  value="<?php echo ($item['stroke_colour'])?>"
-                               size="100" class="code" placeholder="<?php _e('Stroke Colour', 'buddybeacon-maps')?>" required>
+                               size="100" class="code" placeholder="<?php _e('Stroke Colour', 'maps-buddybeacon')?>" required>
                         <small>Beacon border colour.</small>
                     </td>
                 </tr>
@@ -629,20 +629,20 @@ class BuddyBeacon_Maps_Admin {
     
         $messages = array();
 
-        if (empty($item['maptitle'])) $messages[] = __('Map Title is required', 'buddybeacon-maps');
+        if (empty($item['maptitle'])) $messages[] = __('Map Title is required', 'maps-buddybeacon');
 
-        if (($item['mapheight'] != '') && !ctype_digit($item['mapheight'])) $messages[] = __('Map height in wrong format', 'buddybeacon-maps');
+        if (($item['mapheight'] != '') && !ctype_digit($item['mapheight'])) $messages[] = __('Map height in wrong format', 'maps-buddybeacon');
         
-        if (($item['mapwidth'] != '') && !ctype_digit($item['mapwidth'])) $messages[] = __('Map width in wrong format', 'buddybeacon-maps');
+        if (($item['mapwidth'] != '') && !ctype_digit($item['mapwidth'])) $messages[] = __('Map width in wrong format', 'maps-buddybeacon');
         
-        if (($item['number_beacons'] != '') && !ctype_digit($item['number_beacons'])) $messages[] = __('Number of beacons in wrong format', 'buddybeacon-maps');
+        if (($item['number_beacons'] != '') && !ctype_digit($item['number_beacons'])) $messages[] = __('Number of beacons in wrong format', 'maps-buddybeacon');
         
-        if (!ctype_digit($item['stroke_weight'])) $messages[] = __('Stroke weight in wrong format', 'buddybeacon-maps');
+        if (!ctype_digit($item['stroke_weight'])) $messages[] = __('Stroke weight in wrong format', 'maps-buddybeacon');
 
-        if(($item['daterange_to'] < $item['daterange_from']) ) $messages[] = __('"To" date and time earlier than "From" date and time', 'buddybeacon-maps');
+        if(($item['daterange_to'] < $item['daterange_from']) ) $messages[] = __('"To" date and time earlier than "From" date and time', 'maps-buddybeacon');
 
-         if (($item['beacon_delete_lon'] != '') && !is_numeric($item['beacon_delete_lon'])) $messages[] = __('"Delete Beacon" longitude in wrong format', 'buddybeacon-maps');
-          if (($item['beacon_delete_lat'] != '') && !is_numeric($item['beacon_delete_lat'])) $messages[] = __('"Delete Beacon" latitude in wrong format', 'buddybeacon-maps');
+         if (($item['beacon_delete_lon'] != '') && !is_numeric($item['beacon_delete_lon'])) $messages[] = __('"Delete Beacon" longitude in wrong format', 'maps-buddybeacon');
+          if (($item['beacon_delete_lat'] != '') && !is_numeric($item['beacon_delete_lat'])) $messages[] = __('"Delete Beacon" latitude in wrong format', 'maps-buddybeacon');
 
             if ((($item['beacon_delete_lon'] != '') && ($item['beacon_delete_lat'] == '')) || (($item['beacon_delete_lon'] == '') && ($item['beacon_delete_lat'] != '')) ) $messages[] = __('Both longitude and latitude needed in order to delete beacon.');
 
@@ -660,7 +660,7 @@ class BuddyBeacon_Maps_Admin {
 	 */
 	public function display_managemaps_subpage() {
 
-	   include_once 'partials/buddybeacon-maps-admin-managemaps.php';
+	   include_once 'partials/maps-buddybeacon-admin-managemaps.php';
 
 	}
 
@@ -672,7 +672,7 @@ class BuddyBeacon_Maps_Admin {
 	 */
 	public function display_mapsettings_subpage() {
 
-		include_once 'partials/buddybeacon-maps-admin-mapsettings.php';
+		include_once 'partials/maps-buddybeacon-admin-mapsettings.php';
 
 	}
 
@@ -685,7 +685,7 @@ class BuddyBeacon_Maps_Admin {
 	* 
 	* @since    0.1.0
 	*/
-	public function buddybeacon_maps_register_manage_maps_setting() {
+	public function maps_buddybeacon_register_manage_maps_setting() {
 				
 		$option = 'per_page';
 	    $args   = [
@@ -711,16 +711,16 @@ class BuddyBeacon_Maps_Admin {
 
     	add_settings_section(
     		$this->plugin_name . '-settings', 
-    		__( 'Google Maps & ViewRanger Settings', 'buddybeacon-maps' ), 
-    		array( $this, 'buddybeacon_maps_settings_section' ), 
+    		__( 'Google Maps & ViewRanger Settings', 'maps-buddybeacon' ), 
+    		array( $this, 'maps_buddybeacon_settings_section' ), 
     		$this->plugin_name . '-settings'  
     	);
 
     	// Adding the Google API settings field
     	add_settings_field(
     		$this->plugin_name . '-settings',  
-    		__( 'Google Maps API Key', 'buddybeacon-maps' ),
-    		array( $this, 'buddybeacon_maps_googleapi_text' ), 
+    		__( 'Google Maps API Key', 'maps-buddybeacon' ),
+    		array( $this, 'maps_buddybeacon_googleapi_text' ), 
     		$this->plugin_name . '-settings', 
     		$this->plugin_name . '-settings',
     		array(
@@ -731,8 +731,8 @@ class BuddyBeacon_Maps_Admin {
         // Adding the Viewranger API settings field
         add_settings_field(
             $this->plugin_name . '_viewrangerapi', 
-            __( 'Viewranger API Key', 'buddybeacon-maps' ),
-            array( $this, 'buddybeacon_maps_viewrangerapi_text' ), 
+            __( 'Viewranger API Key', 'maps-buddybeacon' ),
+            array( $this, 'maps_buddybeacon_viewrangerapi_text' ), 
             $this->plugin_name . '-settings', 
             $this->plugin_name . '-settings',
             array(
@@ -743,8 +743,8 @@ class BuddyBeacon_Maps_Admin {
         // Adding the BuddyBeacon username settings field
         add_settings_field(
             $this->plugin_name . '_bbuser', 
-            __( 'BuddyBeacon Username', 'buddybeacon-maps' ), 
-            array( $this, 'buddybeacon_maps_bbusername_text' ), 
+            __( 'BuddyBeacon Username', 'maps-buddybeacon' ), 
+            array( $this, 'maps_buddybeacon_bbusername_text' ), 
             $this->plugin_name . '-settings', 
             $this->plugin_name . '-settings', 
             array(
@@ -754,8 +754,8 @@ class BuddyBeacon_Maps_Admin {
 
         add_settings_field(
             $this->plugin_name . '_bbpin',
-            __( 'BuddyBeacon Pin', 'buddybeacon-maps' ), 
-            array( $this, 'buddybeacon_maps_bbpin_text' ),
+            __( 'BuddyBeacon Pin', 'maps-buddybeacon' ), 
+            array( $this, 'maps_buddybeacon_bbpin_text' ),
             $this->plugin_name . '-settings', 
             $this->plugin_name . '-settings',
             array(
@@ -765,9 +765,9 @@ class BuddyBeacon_Maps_Admin {
 
 
         register_setting(
-            'buddybeacon-maps-settings', 
-            'buddybeacon-maps-settings', 
-            array( $this, 'buddybeacon_maps_register_map_setting' )
+            'maps-buddybeacon-settings', 
+            'maps-buddybeacon-settings', 
+            array( $this, 'maps_buddybeacon_register_map_setting' )
         );
 
     }
@@ -778,7 +778,7 @@ class BuddyBeacon_Maps_Admin {
      *
      * @since    0.1.0
      */
-    public function buddybeacon_maps_register_map_setting($input ) {
+    public function maps_buddybeacon_register_map_setting($input ) {
      
         // Create our array for storing the validated options
         $output = array();
@@ -789,13 +789,13 @@ class BuddyBeacon_Maps_Admin {
             // Check to see if the current option has a value. If so, process it.
             if( isset( $input[$key] ) ) {
 
-                if ('buddybeacon-maps_bbpin' == $key && ($input[$key] != '')) {
+                if ('maps-buddybeacon_bbpin' == $key && ($input[$key] != '')) {
 
                     $numlength = mb_strlen($input[$key]);
 
                      if ((!ctype_digit($input[$key]))) {
                         add_settings_error(
-                            'buddybeacon-maps_bbpin',
+                            'maps-buddybeacon_bbpin',
                             'key-not-numeric',
                             'BuddyBeacon Pin must be made up of numbers only',
                             'error'
@@ -807,7 +807,7 @@ class BuddyBeacon_Maps_Admin {
 
                     elseif (($numlength != 4))  {
                         add_settings_error(
-                            'buddybeacon-maps_bbpin',
+                            'maps-buddybeacon_bbpin',
                             'key-wrong-length',
                             'BuddyBeacon Pin must be 4 digits long',
                             'error'
@@ -847,12 +847,12 @@ class BuddyBeacon_Maps_Admin {
         $screen = get_current_screen();
 
         // if the current screen matches the add-map screen
-        if ( 'buddybeacon-maps_page_buddybeacon-add-map' == $screen->id ) {
+        if ( 'maps-buddybeacon_page_buddybeacon-add-map' == $screen->id ) {
 
-            $googleapi = get_option('buddybeacon-maps-settings')['buddybeacon-maps_googleapi'];
-            $vrkey = get_option('buddybeacon-maps-settings')['buddybeacon-maps_viewrangerapi'];
-            $username = get_option('buddybeacon-maps-settings')['buddybeacon-maps_bbuser'];
-            $pin = get_option('buddybeacon-maps-settings')['buddybeacon-maps_bbpin'];
+            $googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
+            $vrkey = get_option('maps-buddybeacon-settings')['maps-buddybeacon_viewrangerapi'];
+            $username = get_option('maps-buddybeacon-settings')['maps-buddybeacon_bbuser'];
+            $pin = get_option('maps-buddybeacon-settings')['maps-buddybeacon_bbpin'];
 
             if (($googleapi == '') || ($vrkey == '') || ($username == '') || ($pin == ''))  {
                 ?>
@@ -860,9 +860,9 @@ class BuddyBeacon_Maps_Admin {
                 <div class="notice notice-warning">
                     <p>
                         <strong>
-                            <a href="?page=buddybeacon-maps-settings" target="_blank">
+                            <a href="?page=maps-buddybeacon-settings" target="_blank">
                             <?php 
-                            _e( 'API and BuddyBeacon settings</a> must be filled in before any maps will display.', 'buddybeacon-maps' );
+                            _e( 'API and BuddyBeacon settings</a> must be filled in before any maps will display.', 'maps-buddybeacon' );
                             ?>
                             </a>
                         </strong>
@@ -882,9 +882,9 @@ class BuddyBeacon_Maps_Admin {
 	 *
 	 * @since  0.1.0
 	 */
-    public function buddybeacon_maps_settings_section() {
+    public function maps_buddybeacon_settings_section() {
     		
-    	echo '<p>' . __( 'In order for your maps to show your locations, you need will need to input valid information in all of the below fields.', 'buddybeacon-maps' ) . '</p>';
+    	echo '<p>' . __( 'In order for your maps to show your locations, you need will need to input valid information in all of the below fields.', 'maps-buddybeacon' ) . '</p>';
     }
 
 
@@ -894,11 +894,11 @@ class BuddyBeacon_Maps_Admin {
 	 *
 	 * @since  0.1.0
 	 */
-	public function buddybeacon_maps_googleapi_text($args) {
+	public function maps_buddybeacon_googleapi_text($args) {
 		
         $field_id = $args['label_for'];
         $name = $this->plugin_name . '-settings[' . $field_id . ']';
-        $options = get_option('buddybeacon-maps-settings');
+        $options = get_option('maps-buddybeacon-settings');
          
         ?>
 
@@ -906,7 +906,7 @@ class BuddyBeacon_Maps_Admin {
         <small>
             <?php 
             $url = "//developers.google.com/maps/documentation/javascript/"; 
-            echo sprintf( wp_kses( __( 'Create a <a href="%s" target="_blank">Google Maps API Key</a>.', 'buddybeacon-maps' ), array(  'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( $url ) );
+            echo sprintf( wp_kses( __( 'Create a <a href="%s" target="_blank">Google Maps API Key</a>.', 'maps-buddybeacon' ), array(  'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( $url ) );
             ?>
         </small>
 
@@ -919,11 +919,11 @@ class BuddyBeacon_Maps_Admin {
 	 *
 	 * @since  0.1.0
 	 */
-	public function buddybeacon_maps_viewrangerapi_text($args) {
+	public function maps_buddybeacon_viewrangerapi_text($args) {
 		
          $field_id = $args['label_for'];
          $name = $this->plugin_name . '-settings[' . $field_id . ']';
-         $options = get_option('buddybeacon-maps-settings');
+         $options = get_option('maps-buddybeacon-settings');
 
     	?>
 	   
@@ -931,7 +931,7 @@ class BuddyBeacon_Maps_Admin {
         <small>
             <?php 
             $url = "//www.viewranger.com/developers/register/"; 
-            echo sprintf( wp_kses( __( 'Create a <a href="%s" target="_blank">ViewRanger API Key</a>.', 'buddybeacon-maps' ), array(  'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( $url ) );
+            echo sprintf( wp_kses( __( 'Create a <a href="%s" target="_blank">ViewRanger API Key</a>.', 'maps-buddybeacon' ), array(  'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( $url ) );
             ?>
         </small>
    
@@ -944,11 +944,11 @@ class BuddyBeacon_Maps_Admin {
 	 *
 	 * @since  0.1.0
 	 */
-	public function buddybeacon_maps_bbusername_text($args) {
+	public function maps_buddybeacon_bbusername_text($args) {
 		
         $field_id = $args['label_for'];
     	$name = $this->plugin_name . '-settings[' . $field_id . ']';
-        $options = get_option('buddybeacon-maps-settings');
+        $options = get_option('maps-buddybeacon-settings');
 
         ?>
        
@@ -963,11 +963,11 @@ class BuddyBeacon_Maps_Admin {
 	 *
 	 * @since  0.1.0
 	 */
-	public function buddybeacon_maps_bbpin_text($args) {
+	public function maps_buddybeacon_bbpin_text($args) {
 			
         $field_id = $args['label_for'];
     	$name = $this->plugin_name . '-settings[' . $field_id . ']';
-        $options = get_option('buddybeacon-maps-settings');
+        $options = get_option('maps-buddybeacon-settings');
         ?>
        
         <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php echo esc_attr($options[$field_id]) ; ?>" class="regular-text" max-length="4" />
@@ -989,7 +989,7 @@ class BuddyBeacon_Maps_Admin {
 
 		wp_enqueue_style('jquery-style-time', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css');
 
-        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/buddybeacon-maps-admin.css', array(), $this->version, 'all' );
+        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/maps-buddybeacon-admin.css', array(), $this->version, 'all' );
 
     }
 
@@ -1001,7 +1001,7 @@ class BuddyBeacon_Maps_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/buddybeacon-maps-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/maps-buddybeacon-admin.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script('jquery-script-time-moment', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js');
 
