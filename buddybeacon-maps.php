@@ -8,7 +8,7 @@
  * Plugin Name:       BuddyBeacon Maps
  * Plugin URI:        https://karenattfield.com/buddybeacon-maps/
  * Description:       Serving map tracks in real time via ViewRanger BuddyBeacon 
- * Version:           0.1.0
+ * Version:           1.0.0
  * Author:            Karen Attfield
  * Author URI:        https://karenattfield.com
  * License: 		  GNU General Public License v2 or later
@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'BUDDYBEACON_MAPS_VERSION', '0.1.0' );
+define( 'BUDDYBEACON_MAPS_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.

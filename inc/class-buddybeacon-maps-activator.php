@@ -56,6 +56,8 @@ class BuddyBeacon_Maps_Activator {
       daterange_to datetime(6) NOT NULL,
       number_beacons int(11) NULL,
       track_colour varchar(10) NOT NULL,
+      beacon_delete_lon varchar(20) NULL,
+      beacon_delete_lat varchar(20) NULL,
       beacon_shape varchar(10) NOT NULL,
       beacon_colour varchar(10) NOT NULL,
       beacon_opacity varchar(10) NOT NULL,

@@ -4,7 +4,7 @@
 **Tags:** google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode  
 **Requires at least:** 4.4  
 **Tested up to:** 5.0  
-**Stable tag:** 0.1.0  
+**Stable tag:** 1.0.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -28,6 +28,7 @@ To display a map in a page or post just add the shortcode: [bb_maps id="{id}"] w
 * Customize your map display - satellite, hybrid, terrain or roadmap. 
 * Display map route information - total distance covered (in km or miles), date range, map title.
 * Display individual beacon information via Google Maps InfoWindows (showing latitute, longitude, altitude and date).
+* Delete beacons from routes.
 * Manage all your maps from the manage maps settings page.
 * Use a shortcode to display your chosen map in any page or post.
 
@@ -68,12 +69,18 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 
 ## Changelog 
 
+### 1.0.0
+* First stable release
+* Editing map route: adding beacon to start of route
+* Adding capability to delete beacons from individual maps
 
 ### 0.1.0 
 * Initial release
 
 ## Upgrade Notice 
 
+### 1.0.0
+* First stable release. Adding beacon to route start, and adding capability to delete beacons.
 
 ### 0.1.0 
 * Initial release, no upgrade notice

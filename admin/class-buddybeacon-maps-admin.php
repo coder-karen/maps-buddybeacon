@@ -179,6 +179,8 @@ class BuddyBeacon_Maps_Admin {
             'daterange_to' => $dateTime,     
             'number_beacons' => '',
             'track_colour' => '#ff0000',
+            'beacon_delete_lon' => '',
+            'beacon_delete_lat' => '',
             'beacon_shape' => '',
             'beacon_colour' => '#ff0000',
             'beacon_opacity' => '0.8',
@@ -516,6 +518,21 @@ class BuddyBeacon_Maps_Admin {
                     </td>
                 </tr>
 
+                  <!-- Form field for deleting beacons -->
+                <tr class="form-field">
+                    <th valign="top" scope="row">
+                        <label for="beacon_delete_lon"><?php _e('Delete Beacon', 'buddybeacon-maps')?></label>
+                    </th>
+                    <td>
+                        <input id="beacon_delete_lon" name="beacon_delete_lon" type="text"  value="<?php echo ($item['beacon_delete_lon'])?>"
+                               size="50" class="code" placeholder="<?php _e('Enter longitude of beacon', 'buddybeacon-maps')?>">
+                                <input id="beacon_delete_lat" name="beacon_delete_lat" type="text"  value="<?php echo ($item['beacon_delete_lat'])?>"
+                               size="50" class="code" placeholder="<?php _e('Enter latitude of beacon', 'buddybeacon-maps')?>" >
+                               <br/><small>Enter the latitude and longitude exactly as they appear in the map Info Window for the beacon you wish to delete.</small>
+                    </td>
+                </tr>
+                
+
 
                 <!-- Beacon style sub-heading -->
                 <tr class="form-field">
@@ -623,6 +640,11 @@ class BuddyBeacon_Maps_Admin {
         if (!ctype_digit($item['stroke_weight'])) $messages[] = __('Stroke weight in wrong format', 'buddybeacon-maps');
 
         if(($item['daterange_to'] < $item['daterange_from']) ) $messages[] = __('"To" date and time earlier than "From" date and time', 'buddybeacon-maps');
+
+         if (($item['beacon_delete_lon'] != '') && !is_numeric($item['beacon_delete_lon'])) $messages[] = __('"Delete Beacon" longitude in wrong format', 'buddybeacon-maps');
+          if (($item['beacon_delete_lat'] != '') && !is_numeric($item['beacon_delete_lat'])) $messages[] = __('"Delete Beacon" latitude in wrong format', 'buddybeacon-maps');
+
+            if ((($item['beacon_delete_lon'] != '') && ($item['beacon_delete_lat'] == '')) || (($item['beacon_delete_lon'] == '') && ($item['beacon_delete_lat'] != '')) ) $messages[] = __('Both longitude and latitude needed in order to delete beacon.');
 
         if (empty($messages)) return true;
 

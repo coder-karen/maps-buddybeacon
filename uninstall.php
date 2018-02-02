@@ -22,10 +22,14 @@ function delete_tables() {
 
 }
 
-$option_name = 'buddybeacon-maps-settings'; 
-delete_option($option_name);
+$settings_option = 'buddybeacon-maps-settings'; 
+$delete_option = 'delete_array';
+delete_option($settings_option);
  // for site options in Multisite
-delete_site_option($option_name);
+delete_site_option($settings_option);
+delete_option($delete_option);
+ // for site options in Multisite
+delete_site_option($delete_option);
 
 delete_tables();
 

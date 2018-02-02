@@ -113,6 +113,8 @@ class BuddyBeacon_Maps_Public {
 					$mapheight = 'auto';
 				}
 
+				$footeralignmentcode = '';
+
 
 				//Check map alignment and create CSS accordingly
 				if ($mapalignment == 'Left') {
@@ -294,6 +296,53 @@ class BuddyBeacon_Maps_Public {
 		$beacon_opacity = $item['beacon_opacity'];
 		$stroke_weight = $item['stroke_weight'];
 		$stroke_colour = $item['stroke_colour'];
+		$beacon_delete_lon = $item['beacon_delete_lon'];
+		$beacon_delete_lat = $item['beacon_delete_lat'];
+
+		$deletearray = get_option("delete_array");
+
+		// Here we check if our array of deleted coordinates is empty. If so we add the option.
+		if (empty($deletearray)) {
+			
+			add_option("delete_array", array(1 => array($beacon_delete_lat, $beacon_delete_lon, $mapid)));
+
+		}
+
+		// If not empty, we add to the array, but only if beacon coordinates aren't already inputted
+		else {
+
+			$break = false;
+			foreach ($deletearray as $value => $key ) {
+				
+				if ((($deletearray[$value][0]) == $beacon_delete_lat) && (($deletearray[$value][1]) == $beacon_delete_lon) && (($deletearray != null) && (isset($deletearray[$value][2])))) {
+					
+					if ($deletearray[$value][2] == $mapid) {
+						$break = true;
+					}
+
+				}
+
+			} // end foreach
+
+			if ($break == false) {
+
+				$int = sizeof($deletearray) + 1;
+				$deletearray = array_merge($deletearray, array($int => array($beacon_delete_lat, $beacon_delete_lon, $mapid)));
+				
+				update_option("delete_array", $deletearray);
+			
+			}
+			
+			
+			// Then we want to clear the beacon_delete_lon and beacon_delete_lat options from the DB.
+			global $wpdb;
+			$table_name = $wpdb->prefix.'maps';
+			$wpdb->update( $table_name, array( 'beacon_delete_lon' => "", 'beacon_delete_lat' => ""), array( "ID" => $item['id'], "ID" => $item['id']));
+   
+		}
+
+		$deletearray = get_option("delete_array");
+
 
 		// Create an array of all shortcode ids (if more than one on a page) to add to map data array
     	global $arr;  
@@ -307,7 +356,7 @@ class BuddyBeacon_Maps_Public {
 	 
 
 		//We then put these variables into an array
-		$maparray = compact("maptype", "ib_distance", "track_colour", "beacon_shape", "beacon_colour", "beacon_opacity", "stroke_weight", "stroke_colour", "arr");
+		$maparray = compact("maptype", "ib_distance", "track_colour", "deletearray", "beacon_shape", "beacon_colour", "beacon_opacity", "stroke_weight", "stroke_colour", "arr");
 
 		$args = array( 'timeout' => 120 );
 

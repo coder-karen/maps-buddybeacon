@@ -84,3 +84,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 
+#beacon_delete_lon, #beacon_delete_lat {
+width: 250px;
+}
+
