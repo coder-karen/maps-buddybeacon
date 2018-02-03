@@ -23,7 +23,7 @@ function delete_tables() {
 }
 
 $settings_option = 'maps-buddybeacon-settings'; 
-$delete_option = 'delete_array';
+$delete_option = 'bbmaps-delete_array';
 delete_option($settings_option);
  // for site options in Multisite
 delete_site_option($settings_option);

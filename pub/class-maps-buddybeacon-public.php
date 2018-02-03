@@ -299,12 +299,12 @@ class Maps_BuddyBeacon_Public {
 		$beacon_delete_lon = $item['beacon_delete_lon'];
 		$beacon_delete_lat = $item['beacon_delete_lat'];
 
-		$deletearray = get_option("delete_array");
+		$deletearray = get_option("bbmaps-delete_array");
 
 		// Here we check if our array of deleted coordinates is empty. If so we add the option.
 		if (empty($deletearray)) {
 			
-			add_option("delete_array", array(1 => array($beacon_delete_lat, $beacon_delete_lon, $mapid)));
+			add_option("bbmaps-delete_array", array(1 => array($beacon_delete_lat, $beacon_delete_lon, $mapid)));
 
 		}
 
@@ -329,7 +329,7 @@ class Maps_BuddyBeacon_Public {
 				$int = sizeof($deletearray) + 1;
 				$deletearray = array_merge($deletearray, array($int => array($beacon_delete_lat, $beacon_delete_lon, $mapid)));
 				
-				update_option("delete_array", $deletearray);
+				update_option("bbmaps-delete_array", $deletearray);
 			
 			}
 			
@@ -341,7 +341,7 @@ class Maps_BuddyBeacon_Public {
    
 		}
 
-		$deletearray = get_option("delete_array");
+		$deletearray = get_option("bbmaps-delete_array");
 
 
 		// Create an array of all shortcode ids (if more than one on a page) to add to map data array

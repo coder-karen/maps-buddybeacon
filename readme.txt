@@ -4,6 +4,7 @@ Donate Link: https://karenattfield.com/giving/
 Tags: google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode
 Requires at least: 4.4
 Tested up to: 5.0
+Requires PHP: 5.6.25
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
