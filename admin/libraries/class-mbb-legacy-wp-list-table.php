@@ -19,7 +19,7 @@
  * @since 3.1.0
  * @access private
  */
-class Legacy_WP_List_Table {
+class MBB_Legacy_WP_List_Table {
 
 	/**
 	 * The current list of items.

@@ -15,10 +15,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 
 // Drop the maps table
-function delete_tables() {
+function maps_buddybeacon_delete_tables() {
 	
 	global $wpdb;
-	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}maps");
+	$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}mapsbb");
 
 }
 
@@ -31,5 +31,5 @@ delete_option($delete_option);
  // for site options in Multisite
 delete_site_option($delete_option);
 
-delete_tables();
+maps_buddybeacon_delete_tables();
 

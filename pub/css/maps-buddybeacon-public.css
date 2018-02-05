@@ -2,24 +2,24 @@
  * CSS for the public-facing functionality
  */
 
-.map-canvas {
+.mapsbb-canvas {
 	height: 500px;
 	margin: 10px 10px 0;
 	width: 100%;
 }
 
 
-.map-summary {
+.mapsbb-summary {
 	text-align:center;
 }
 
-.map-footer {
+.mapsbb-footer {
 	margin: 0 10px 10px;
 	padding:0;
 }
 
 
-.map-footer-title {
+.mapsbb-footer-title {
 	font-size: 14px;
 	font-weight: bold;
 	margin-bottom:5px;
@@ -29,7 +29,7 @@
 	text-decoration:underline;
 }
 
-.map-footer-text {
+.mapsbb-footer-text {
 	font-size: 12px;
 	font-weight: bold;
 	line-height:12px;

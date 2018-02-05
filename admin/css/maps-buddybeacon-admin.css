@@ -7,11 +7,11 @@
 	margin-left: 1em;
 }
 
-.bb-form-table {
+.mapsbb-form-table {
 	width: 100%;
 }
 
-.bb-table-heading {
+.mapsbb-table-heading {
 	font-size: 1.4em;
 }
 
@@ -19,7 +19,7 @@
 	padding-left: 0.25em;
 }
 
-#manage-maps .tablenav-pages-navspan {
+#manage-mapsbb .tablenav-pages-navspan {
 	background: auto !important;
 	height: auto !important;
 }

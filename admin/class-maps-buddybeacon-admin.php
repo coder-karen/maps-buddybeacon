@@ -20,7 +20,7 @@
  */
 
 
-include_once( 'class-maps-list-table.php' );
+include_once( 'class-mapsbb-list-table.php' );
 
 
 class Maps_BuddyBeacon_Admin {
@@ -153,7 +153,7 @@ class Maps_BuddyBeacon_Admin {
 	public function display_addmap_subpage() {
 
 	    global $wpdb;
-        $table_name = $wpdb->prefix . 'maps'; 
+        $table_name = $wpdb->prefix . 'mapsbb'; 
 
         $message = '';
         $notice = '';
@@ -316,9 +316,9 @@ class Maps_BuddyBeacon_Admin {
 
         ?>
         <!-- Map data table -->
-        <table cellspacing="2" cellpadding="5"  class="form-table bb-form-table" >
+        <table cellspacing="2" cellpadding="5"  class="form-table mapsbb-form-table" >
             <tbody>
-            	<h2 class="table-heading bb-table-heading" >Map data</h2>
+            	<h2 class="table-heading mapsbb-table-heading" >Map data</h2>
             	<hr>
 
                 <!-- Form field to echo map shortcode, if map is being edited (id is already set) -->
@@ -696,7 +696,7 @@ class Maps_BuddyBeacon_Admin {
 
     	add_screen_option( $option, $args );
 
-    	$this->customers_obj = new Maps_List();	
+    	$this->mapsbb_obj = new MBB_Maps_List();	
 		
 	}
 

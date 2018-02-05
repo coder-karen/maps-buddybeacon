@@ -8,15 +8,15 @@ function gm_authFailure() {
 	// Alert potential developer to Invalid API Key
 	console.log( "Invalid Google API Key");
 
-	/* Code to hide map-canvas */ 
-	if (document.getElementsByClassName('map-canvas')[0]) {
-		document.getElementsByClassName('map-canvas')[0].style.width = "0";
-		document.getElementsByClassName('map-canvas')[0].style.height = "0";
-		document.getElementsByClassName('map-canvas')[0].style.display = "none";
+	/* Code to hide mapsbb-canvas */ 
+	if (document.getElementsByClassName('mapsbb-canvas')[0]) {
+		document.getElementsByClassName('mapsbb-canvas')[0].style.width = "0";
+		document.getElementsByClassName('mapsbb-canvas')[0].style.height = "0";
+		document.getElementsByClassName('mapsbb-canvas')[0].style.display = "none";
 		/* Code to hide map-footer */ 
-		document.getElementsByClassName('map-footer')[0].style.width = "0";
-		document.getElementsByClassName('map-footer')[0].style.height = "0";
-		document.getElementsByClassName('map-footer')[0].style.display = "none";
+		document.getElementsByClassName('mapsbb-footer')[0].style.width = "0";
+		document.getElementsByClassName('mapsbb-footer')[0].style.height = "0";
+		document.getElementsByClassName('mapsbb-footer')[0].style.display = "none";
 	}
 };
 
@@ -38,8 +38,8 @@ function gm_authFailure() {
 	window.initMap = function() {
 		initMap.called = true;
 
-		//Return if the 'map-canvas' class name doesn't exist or is hidden
-		if (!($(".map-canvas")[0]) && (document.getElementsByClassName('map-canvas')[0].style.display == "none")) {
+		//Return if the 'mapsbb-canvas' class name doesn't exist or is hidden
+		if (!($(".mapsbb-canvas")[0]) && (document.getElementsByClassName('mapsbb-canvas')[0].style.display == "none")) {
 			return;
 		}
 
@@ -47,7 +47,7 @@ function gm_authFailure() {
 
 		// Parsing our ViewRanger information into JSON
 
-		const $mapcanvas = $('.map-canvas');
+		const $mapcanvas = $('.mapsbb-canvas');
 
 		//For each map on the page:
 		for (let j = 0; j < $mapcanvas.length; j++) {  
@@ -60,7 +60,7 @@ function gm_authFailure() {
 			
 
 			//If the map canvas id matches the id in array
-			if ($(".map-canvas").is('#'+arr[j])) {
+			if ($(".mapsbb-canvas").is('#'+arr[j])) {
 
 				var mapid = arr[j];
 		
@@ -149,7 +149,7 @@ function gm_authFailure() {
 	
 
 				// Create the map
-		 		var map = new google.maps.Map(document.getElementsByClassName('map-canvas')[j], {
+		 		var map = new google.maps.Map(document.getElementsByClassName('mapsbb-canvas')[j], {
 
 		          	center: centerpoint,  
 
@@ -253,7 +253,7 @@ function gm_authFailure() {
 
 				    //Convert total distance to miles and send to info box under map
 					var distanceinkm = Math.round((totaldistance * 0.00062137) * 100) / 100;
-					var elementname = 'map-footer-distance'+arr[j]+'';
+					var elementname = 'mapsbb-footer-distance'+arr[j]+'';
 					var outputdistance = document.getElementById(elementname);
 			    	outputdistance.innerHTML = 'Distance: ' + distanceinkm + ' miles';
 
@@ -263,7 +263,7 @@ function gm_authFailure() {
 			
 					//Convert total distance to km and send to info box under map
 					var distanceinkm = Math.round((totaldistance/1000) * 100) / 100;
-					var elementname = 'map-footer-distance'+arr[j]+'';
+					var elementname = 'mapsbb-footer-distance'+arr[j]+'';
 					var outputdistance = document.getElementById(elementname);
 			    	outputdistance.innerHTML = 'Distance: ' + distanceinkm + 'km';
 

@@ -11,21 +11,21 @@
  */
 
 
-if( ! class_exists( 'Legacy_WP_List_Table' ) ) {
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/libraries/class-legacy-wp-list-table.php';
+if( ! class_exists( 'MBB_Legacy_WP_List_Table' ) ) {
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/libraries/class-mbb-legacy-wp-list-table.php';
 }
 
 
 
-class Maps_List extends Legacy_WP_List_Table {
+class MBB_Maps_List extends MBB_Legacy_WP_List_Table {
 
 	/** Class constructor */
 	public function __construct() {
 
 		parent::__construct( [
-			'singular' => __( 'map', 'sp' ), //singular name of the listed records
-			'plural'   => __( 'maps', 'sp' ), //plural name of the listed records
-			'ajax'     => false //should this table support ajax?
+			'singular' => __( 'map', 'sp' ), 
+			'plural'   => __( 'maps', 'sp' ), 
+			'ajax'     => false 
 
 		] );
 
@@ -33,7 +33,7 @@ class Maps_List extends Legacy_WP_List_Table {
 
 
 	/**
-	 * Retrieve customer’s data from the database
+	 * Retrieve map data from the database
 	 *
 	 * @param int $per_page
 	 * @param int $page_number
@@ -44,9 +44,9 @@ class Maps_List extends Legacy_WP_List_Table {
 
 	  	global $wpdb;
 
-		$table_name = $wpdb->prefix.'maps';
+		$table_name = $wpdb->prefix.'mapsbb';
 
-	  	$sql = "SELECT * FROM {$wpdb->prefix}maps";
+	  	$sql = "SELECT * FROM {$wpdb->prefix}mapsbb";
 
 	  	if (empty($_REQUEST['orderby'] ) ) {
 			$sql .=  ' ORDER BY id DESC';
@@ -72,13 +72,13 @@ class Maps_List extends Legacy_WP_List_Table {
 	/**
 	 * Delete a map record.
 	 *
-	 * @param int $id customer ID
+	 * @param int $id map ID
 	 */
 	public static function delete_map( $id ) {
 	  	global $wpdb;
 
 	  	$wpdb->delete(
-	    	"{$wpdb->prefix}maps",
+	    	"{$wpdb->prefix}mapsbb",
 	    	[ 'ID' => $id ],
 	    	[ '%d' ]
 	  	);
@@ -95,7 +95,7 @@ class Maps_List extends Legacy_WP_List_Table {
 	  	
 	  	global $wpdb;
 
-	  	$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}maps";
+	  	$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}mapsbb";
 
 		return $wpdb->get_var( $sql );
 
@@ -119,7 +119,7 @@ class Maps_List extends Legacy_WP_List_Table {
 	 */
 	function column_maptitle( $item ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix.'maps';
+		$table_name = $wpdb->prefix.'mapsbb';
 	  	
 	  	// create a nonce
 	  	$delete_nonce = wp_create_nonce( 'sp_delete_map' );
@@ -268,7 +268,7 @@ class Maps_List extends Legacy_WP_List_Table {
 	public function prepare_items() {
 		
 		global $wpdb;
-		$table_name = $wpdb->prefix.'maps';
+		$table_name = $wpdb->prefix.'mapsbb';
 
 		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
 		  	echo "Nothing here!";
@@ -302,7 +302,7 @@ class Maps_List extends Legacy_WP_List_Table {
 	public function process_bulk_action() {
 
 		global $wpdb;
-		$table_name = $wpdb->prefix.'maps';
+		$table_name = $wpdb->prefix.'mapsbb';
 
 	    if ('delete' === $this->current_action()) {
 

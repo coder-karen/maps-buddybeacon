@@ -195,7 +195,7 @@ class Maps_BuddyBeacon_Public {
 
 	              		$theid = $atts['id'];
 		         
-		            	$map_canvas = "<div class='map-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='map-footer' " . $mapfooter . "><div class='map-summary' ><p class='map-footer-title'>" . $maptitle .  "</p><p class='map-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='map-footer-distance".$theid."' ></p></div></div>";					
+		            	$map_canvas = "<div class='mapsbb-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='mapsbb-footer' " . $mapfooter . "><div class='mapsbb-summary' ><p class='mapsbb-footer-title'>" . $maptitle .  "</p><p class='mapsbb-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='mapsbb-footer-distance".$theid."' ></p></div></div>";					
 
 						return $map_canvas;
 					}	
@@ -222,7 +222,7 @@ class Maps_BuddyBeacon_Public {
 
 		global $wpdb;
 
-		$table_name = $wpdb->prefix.'maps';
+		$table_name = $wpdb->prefix.'mapsbb';
 	
   		$item = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $mapid), ARRAY_A);
 
@@ -336,7 +336,7 @@ class Maps_BuddyBeacon_Public {
 			
 			// Then we want to clear the beacon_delete_lon and beacon_delete_lat options from the DB.
 			global $wpdb;
-			$table_name = $wpdb->prefix.'maps';
+			$table_name = $wpdb->prefix.'mapsbb';
 			$wpdb->update( $table_name, array( 'beacon_delete_lon' => "", 'beacon_delete_lat' => ""), array( "ID" => $item['id'], "ID" => $item['id']));
    
 		}

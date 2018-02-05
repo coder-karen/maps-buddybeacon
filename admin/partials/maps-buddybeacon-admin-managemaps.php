@@ -31,14 +31,14 @@ if (!current_user_can('manage_options')) {
 	<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-1">
 			<div id="post-body-content">
-				<div class="meta-box-sortables ui-sortable" id="manage-maps">
+				<div class="meta-box-sortables ui-sortable" id="manage-mapsbb">
 					<form method="post">
 						
 						<?php
 						
-						$this->customers_obj->prepare_items();
+						$this->mapsbb_obj->prepare_items();
 
-						$this->customers_obj->display(); ?>
+						$this->mapsbb_obj->display(); ?>
 					</form>
 
 				</div>
