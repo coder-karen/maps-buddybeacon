@@ -432,7 +432,7 @@ class Maps_BuddyBeacon_Public {
     			wp_enqueue_script('jquery');
 			}
 
-			wp_enqueue_script('jquery-script-time-moment', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js');
+			wp_enqueue_script('jquery-script-time-moment', plugin_dir_url( __FILE__ ) .'../admin/js/mbb-moment.min.js');
 
 			wp_register_script( 'buddybeacon-js', plugin_dir_url( __FILE__ ) . 'js/maps-buddybeacon-public.js', array(), time(), true );
 						

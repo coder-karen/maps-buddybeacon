@@ -1003,9 +1003,9 @@ class Maps_BuddyBeacon_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/maps-buddybeacon-admin.js', array( 'jquery' ), $this->version, false );
 
-		wp_enqueue_script('jquery-script-time-moment', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js');
+        wp_enqueue_script('jquery-script-time-moment', plugin_dir_url( __FILE__ ) .'js/mbb-moment.min.js');
 
-		wp_enqueue_script('jquery-script-time', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js');
+        wp_enqueue_script('jquery-script-time', plugin_dir_url( __FILE__ ) .'js/mbb-bootstrap-datetimepicker.min.js');
 
 	}
 
