@@ -983,11 +983,12 @@ class Maps_BuddyBeacon_Admin {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 
-		wp_enqueue_style('jquery-style-boot', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+        wp_enqueue_style('jquery-style',  plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
 
-		wp_enqueue_style('jquery-style-time', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css');
+        wp_enqueue_style('jquery-style-boot',  plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
+
+        wp_enqueue_style('jquery-style-time',  plugin_dir_url( __FILE__ ) . 'css/bootstrap-datetimepicker.css');
 
         wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/maps-buddybeacon-admin.css', array(), $this->version, 'all' );
 
