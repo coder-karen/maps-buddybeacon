@@ -1,6 +1,6 @@
 
 /* Creating the initMap function in the global scope */ 
-window.initMap = function() {}
+window.initMap = () => {}
 
 /* If the Google Maps API key is invalid */ 
 function gm_authFailure() { 
@@ -24,7 +24,7 @@ function gm_authFailure() {
 (function( $ ) {
 	'use strict';
 
-	setTimeout(function() {
+	setTimeout( () => {
 
 		if (initMap.called) {
 			return;
@@ -35,7 +35,8 @@ function gm_authFailure() {
 	}, 3000);
 
 
-	window.initMap = function() {
+	window.initMap = () => {
+
 		initMap.called = true;
 
 		//Return if the 'mapsbb-canvas' class name doesn't exist or is hidden
@@ -43,7 +44,7 @@ function gm_authFailure() {
 			return;
 		}
 
-		var map;
+		let map;
 
 		// Parsing our ViewRanger information into JSON
 
@@ -51,39 +52,44 @@ function gm_authFailure() {
 
 		//For each map on the page:
 		for (let j = 0; j < $mapcanvas.length; j++) {  
-			var mapdata = JSON.parse(php_vars);
-			var arr = mapdata["maparray"].arr;
-			var php_vars_id = eval('php_vars' + arr[j]);
-			var mapdatasingle = JSON.parse(php_vars_id);
-			var arr2 = mapdatasingle["maparray"].arr;
-			var maptype = mapdatasingle["maparray"].maptype;
+			const mapdata = JSON.parse(php_vars);
+			const arr = mapdata["maparray"].arr;
+			const php_vars_id = eval('php_vars' + arr[j]);
+			const mapdatasingle = JSON.parse(php_vars_id);
+			const arr2 = mapdatasingle["maparray"].arr;
+			const maptype = mapdatasingle["maparray"].maptype;
 			
 
 			//If the map canvas id matches the id in array
 			if ($(".mapsbb-canvas").is('#'+arr[j])) {
 
-				var mapid = arr[j];
+				const mapid = arr[j];
 		
-				var mapdatas = mapdatasingle;
+				const mapdatas = mapdatasingle;
 
 				// Pulling out the location (latitude and longitude) information
-				var jslocations = mapdatas["url"].VIEWRANGER.LOCATIONS;
+				const jslocations = mapdatas["url"].VIEWRANGER.LOCATIONS;
 
 				//Creating an empty array to store the converted data in
-				var coordinates = [];
+				let coordinates = [];
 
 				//Create another empty array to store all beacon coordinates minus deleted beacon coordinates
-				var coordinatesdel = []; 
+				let coordinatesdel = []; 
 
+				// Defining a variable for the timezone adjustment
+				const timezoneadjust = mapdatas["maparray"].timezone_conversion;
 
 
 				// Converting the JSON data into a Javascript array
-				for (let i = 0; i < jslocations.length; i++) {
+				for (const loc in jslocations) {
 
-					var longitudes = parseFloat(jslocations[i].LONGITUDE);
-					var latitudes = parseFloat(jslocations[i].LATITUDE);
-					var beacondateraw =  moment(mapdatas["url"].VIEWRANGER.LOCATIONS[i].DATE).format('MMMM Do YYYY HH:mm:ss');
-					var altituderaw = mapdatas["url"].VIEWRANGER.LOCATIONS[i].ALTITUDE;
+					// Defining the longitude and latitude for each beacon
+					const longitudes = parseFloat(jslocations[loc].LONGITUDE);
+					const latitudes = parseFloat(jslocations[loc].LATITUDE);
+					// Defining the correct date and time for each beacon
+					const beacondateraw =  moment(mapdatas["url"].VIEWRANGER.LOCATIONS[loc].DATE).add(timezoneadjust, 'hours').format('MMMM Do YYYY HH:mm:ss');
+					// Defining the altitude for each beacon
+					const altituderaw = mapdatas["url"].VIEWRANGER.LOCATIONS[loc].ALTITUDE;
 			
 			
 
@@ -98,79 +104,85 @@ function gm_authFailure() {
 				coordinatesdel = coordinates;
 			
 				// Pulling out the array of coordinates that are to be deleted
-				var deletecoords = mapdatas["maparray"].deletearray;
+				const deletecoords = mapdatas["maparray"].deletearray;
 
+				const numberofcoords = coordinates.length;
 
-				// Make sure we iterate through the deletedcoords array as many times as there are coordinates
-				// to make sure we don't miss duplicates
-				for (let r = 0; r < coordinates.length; r++) {
+				// Iterate through each deletecoords array item.
+				for (let m = 0; m < deletecoords.length; m++) {
 
-					// Iterate through each deletecoords array item.
-					for(let m = 0; m < deletecoords.length; m++) {
+					// Pulling out the map id as stored in the deletedcoords array
+					let deletedcoordsid = deletecoords[m][2];
 
-						// Pulling out the map id as stored in the deletedcoords array
-						var deletedcoordsid = deletecoords[m][2];
+					// If the mapid in the deleted coordinates array isn't correct, continue the iteration
+					if (deletedcoordsid != mapid) {
+							continue;
+					}
+
+					//Iterate through each coordinates array item
+					for (let r = 0; r < numberofcoords; r++) {
+
 
 						// If the id matches
 						if ( deletedcoordsid == mapid) {
-
-							// Iterate through each original coordinates item
-							for (let n = 0; n < coordinates.length; n++) {
-
+					
 								// If the lat and lng of each individual beacon matches the lat and lng of any of those
 								// in the coordinates array
-								if ((parseFloat(deletecoords[m][0]) == coordinates[n]['lat'] ) && (parseFloat(deletecoords[m][1]) == coordinates[n]['lng'] ) ) {
+								if (( coordinates[r])) {
+
+									if ((parseFloat(deletecoords[m][0]) == coordinates[r]['lat'] ) && (parseFloat(deletecoords[m][1]) == coordinates[r]['lng'] ) ) {
 
 									// Delete that item in the array of coordinates that holds only undeleted coordinates
-									coordinatesdel.splice(n,1);
+									coordinatesdel.splice(r,1);
+
+									}
 	
 								}
 		
-							}
-
 						}
 
 					} // end loop iterating through each deletecoords array item
 
 				} // end final for loop
 
+
 				
 				// Defining a map bound
-				var bound = new google.maps.LatLngBounds();
+				const bound = new google.maps.LatLngBounds();
 
 				for (let l = 0; l < coordinates.length; l++) {  
 
-				  	bound.extend( new google.maps.LatLng(coordinates[l]['lat'], coordinates[l]['lng']) ); // <- make sure to edit this
+				  	bound.extend( new google.maps.LatLng(coordinates[l]['lat'], coordinates[l]['lng']) ); 
 
 				}
 
 				// Defining the map center point based on the bound
-				var centerpoint = bound.getCenter();
+				const centerpoint = bound.getCenter();
 	
 
 				// Create the map
-		 		var map = new google.maps.Map(document.getElementsByClassName('mapsbb-canvas')[j], {
+		 		let map = new google.maps.Map(document.getElementsByClassName('mapsbb-canvas')[j], {
 
 		          	center: centerpoint,  
 
 		  		});
 
 		 		// Set the map type
-		   		var themaptype = mapdatas["maparray"].maptype.toLowerCase();
+		   		const themaptype = mapdatas["maparray"].maptype.toLowerCase();
 				map.setMapTypeId(themaptype);
 
 				// Fit the map to the created bounds
 		  		map.fitBounds(bound);
 
 
-			    var marker, i;
-			    var beacon_shape = mapdatas["maparray"].beacon_shape;
+			    let marker, icon;
+			    let beacon_shape = mapdatas["maparray"].beacon_shape;
 
 
 			    // If the beacon shape is Circle, then create the Circle icon
 			  	if (beacon_shape == "Circle") {
 			  		
-			        var icon = {
+			        icon = {
 
 				        path: google.maps.SymbolPath.CIRCLE, 
 				        fillColor: mapdatasingle["maparray"].beacon_colour,  
@@ -185,7 +197,7 @@ function gm_authFailure() {
 			  	// Otherwise create the Square icon
 			  	else {
 
-			  		var icon = {
+			  		icon = {
 
 				        path: "M -2,2 -2,-2 2,-2 2,2 z",
 				        fillColor: mapdatas["maparray"].beacon_colour,
@@ -199,62 +211,62 @@ function gm_authFailure() {
 
 
 			    // Variables to aid in determining distance between beacons (in for loop below)
-			    var numberCoords = coordinates.length - 1; 
-			    var totaldistance = 0;
-			    var distancescombined = 0;
-			    var coord = 0;
+			    let numberCoords = coordinates.length - 1; 
+			    let totaldistance = 0;
+			    let distancescombined = 0;
+			    let coord = 0;
 
 			    // For each coordinate (including first and last), add marker and infowindow
-		     	for( let k = 0; k < (coordinates.length); k++ )  { 
+		     	for( let co = 0; co < coordinates.length; co++ )  { 
 
-			        var positions = new google.maps.LatLng(coordinates[k]); 
+			        let positions = new google.maps.LatLng(coordinates[co]); 
 	
 
 			        marker = new google.maps.Marker({
 			            position: positions,
 			            map: map,
 			            icon: icon,
-		 	            title: coordinates[k][0]  
+		 	            title: coordinates[co][0]  
 			        });
 			   
-			        var latit = "<strong>Latitude:</strong> " + coordinates[k].lat + "&#176; <br/>"; 
-			        var longit = "<strong>Longitude:</strong> " + coordinates[k].lng + "&#176; <br/>"; 
-					var beacondate = "<strong>Date:</strong> " + coordinates[k].date + " <br/>";
-			        var altitude = "<strong>Altitude:</strong> " + coordinates[k].alt + "m <br/>";
-			        var message = beacondate + altitude + latit + longit;
+			        let latit = "<strong>Latitude:</strong> " + coordinates[co].lat + "&#176; <br/>"; 
+			        let longit = "<strong>Longitude:</strong> " + coordinates[co].lng + "&#176; <br/>"; 
+					let beacondate = "<strong>Date:</strong> " + coordinates[co].date + " <br/>";
+			        let altitude = "<strong>Altitude:</strong> " + coordinates[co].alt + "m <br/>";
+			        let message = beacondate + altitude + latit + longit;
 
 			        // Add the infowindow
 			        addInfoWindow(marker, message);
 
+			       	// For each coordinate, calculate the distance travelled between each in 
+			    	// order to determine total distance travelled
+			    	// However, we can't do this for the final coordinate so leave the loop before then.
+			    	if (co >= numberCoords ) {
+			    		continue;
+			    	}
+
+					let coord2 = co+1;
+					let startlat = coordinates[coord].lat;  
+				    let startlng = coordinates[coord].lng;  
+				    let startLatLng = new google.maps.LatLng(startlat, startlng);
+				    let endlat = coordinates[coord2].lat; 
+				    let endlng = coordinates[coord2].lng;
+				    let endLatLng = new google.maps.LatLng(endlat, endlng);
+				    distancescombined =  google.maps.geometry.spherical.computeDistanceBetween(startLatLng, endLatLng);
+				    totaldistance = totaldistance + distancescombined;
+				    coord = coord+1;
+
 			    }
-
-			    // For each coordinate, calculate the distance travelled between each in 
-			    // order to determine total distance travelled
-			    for( let q = 0; q < (coordinates.length - 1); q++ )  { 
-
-					// Calculating distance travelled between each beacon
-					var coord2 = q+1;
-					var startlat = coordinates[coord].lat;  
-				    var startlng = coordinates[coord].lng;  
-				    var startLatLng = new google.maps.LatLng(startlat, startlng);
-				    var endlat = coordinates[coord2].lat; 
-				    var endlng = coordinates[coord2].lng;
-				    var endLatLng = new google.maps.LatLng(endlat, endlng);
-				    var distancescombined =  google.maps.geometry.spherical.computeDistanceBetween(startLatLng, endLatLng);
-				    var totaldistance = totaldistance + distancescombined;
-				    var coord = coord+1;
-
-			    } //end for loop
 
 
 			    // Calculate the distance based on the distance type
-			    var distancetype = mapdatas["maparray"].ib_distance;
+			    const distancetype = mapdatas["maparray"].ib_distance;
 		    	if (distancetype == 'Miles') {
 
 				    //Convert total distance to miles and send to info box under map
-					var distanceinkm = Math.round((totaldistance * 0.00062137) * 100) / 100;
-					var elementname = 'mapsbb-footer-distance'+arr[j]+'';
-					var outputdistance = document.getElementById(elementname);
+					let distanceinkm = Math.round((totaldistance * 0.00062137) * 100) / 100;
+					let elementname = 'mapsbb-footer-distance'+arr[j]+'';
+					let outputdistance = document.getElementById(elementname);
 			    	outputdistance.innerHTML = 'Distance: ' + distanceinkm + ' miles';
 
 		    	}
@@ -262,15 +274,15 @@ function gm_authFailure() {
 		    	else {
 			
 					//Convert total distance to km and send to info box under map
-					var distanceinkm = Math.round((totaldistance/1000) * 100) / 100;
-					var elementname = 'mapsbb-footer-distance'+arr[j]+'';
-					var outputdistance = document.getElementById(elementname);
+					let distanceinkm = Math.round((totaldistance/1000) * 100) / 100;
+					let elementname = 'mapsbb-footer-distance'+arr[j]+'';
+					let outputdistance = document.getElementById(elementname);
 			    	outputdistance.innerHTML = 'Distance: ' + distanceinkm + 'km';
 
 	    		}
 
 	    		// Create the flightpath - the polylines between markers
-			    var flightPath = new google.maps.Polyline({
+			    let flightPath = new google.maps.Polyline({
 
 			     	path: coordinates,  
 			     	geodesic: true,
@@ -282,13 +294,14 @@ function gm_authFailure() {
 		     	flightPath.setMap(map);
 
 		     	// Function to add info windows for each marker
+
 				function addInfoWindow(marker, message) {
 
-		            var infoWindow = new google.maps.InfoWindow({
+		            const infoWindow = new google.maps.InfoWindow({
 		                content: message
 		            });
 
-		            google.maps.event.addListener(marker, 'click', function () {
+		            google.maps.event.addListener(marker, 'click', () => {
 		                infoWindow.open(map, marker);
 		            });
 

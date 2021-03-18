@@ -84,6 +84,7 @@ class Maps_BuddyBeacon {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->mb_check_plugin_version();
 
 	}
 
@@ -150,6 +151,29 @@ class Maps_BuddyBeacon {
 	}
 
 	/**
+	 *
+	 * Checks the current version to see if it has changed
+	 *
+	 * @since    0.1.0
+	 * @access   public
+	 */
+	 function mb_check_plugin_version() {
+
+		if (MAPS_BUDDYBEACON_VERSION !== get_option('mb_plugin_version')) {
+
+	
+			$plugin_admin = new Maps_BuddyBeacon_Admin( $this->get_plugin_name(), $this->get_version());
+		
+			// Adds the correct plugin version number
+			$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'mb_rerun_activation' );
+
+		}
+
+
+		
+	}
+
+	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -172,6 +196,8 @@ class Maps_BuddyBeacon {
 
 		// Hook our settings page empty boxes warning function
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'settings_page_empty_boxes_warning' );
+
+	
 
 	}
 

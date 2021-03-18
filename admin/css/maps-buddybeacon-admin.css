@@ -83,6 +83,10 @@ input[type="color"]::-webkit-color-swatch {
     width: auto !important;
 }
 
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    inset: auto!important;
+}
+
 
 #beacon_delete_lon, #beacon_delete_lat {
 width: 250px;

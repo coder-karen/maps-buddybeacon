@@ -63,27 +63,26 @@ class Maps_BuddyBeacon_Public {
 	 *
 	 * @since  0.1.0
 	 */
-	public function maps_buddybeacon_shortcode($atts) {
+	public function maps_buddybeacon_shortcode($atts = [], $content = null, $tag = '') {
+
+		    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
+		    ob_start();
 
 			 if (isset ($atts)) {
 			 
 	                $atts = shortcode_atts(
 	                    array(
 	                        'id' => '',
-	                    ), $atts
+	                    ), $atts, $tag
 	                );
 
 	            
 	            }
 
 	            $mapid = $atts['id'];
-
 	
 	          
-
-	            // foreach($mapid as $id) {
-	            // 	var_dump($id);
-	            // }
             	$googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
 
 	            //Map variables
@@ -195,9 +194,12 @@ class Maps_BuddyBeacon_Public {
 
 	              		$theid = $atts['id'];
 		         
-		            	$map_canvas = "<div class='mapsbb-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='mapsbb-footer' " . $mapfooter . "><div class='mapsbb-summary' ><p class='mapsbb-footer-title'>" . $maptitle .  "</p><p class='mapsbb-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='mapsbb-footer-distance".$theid."' ></p></div></div>";					
+		            	$content = "<div class='mapsbb-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='mapsbb-footer' " . $mapfooter . "><div class='mapsbb-summary' ><p class='mapsbb-footer-title'>" . $maptitle .  "</p><p class='mapsbb-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='mapsbb-footer-distance".$theid."' ></p></div></div>";					
 
-						return $map_canvas;
+		            	$content .= ob_get_contents();
+		            	ob_end_clean();
+		            	return $content;
+
 					}	
 
             	}
@@ -290,6 +292,8 @@ class Maps_BuddyBeacon_Public {
 		//Here we are gathering the remaining map/beacon information to be used in order to style the map output
 		$maptype = $item['type'];
 		$ib_distance = $item['ib_distance'];
+		$timezone_conversion = $item['timezone_conversion']; 
+		
 		$track_colour = $item['track_colour'];
 		$beacon_shape = $item['beacon_shape'];
 		$beacon_colour = $item['beacon_colour'];
@@ -356,17 +360,27 @@ class Maps_BuddyBeacon_Public {
 	 
 
 		//We then put these variables into an array
-		$maparray = compact("maptype", "ib_distance", "track_colour", "deletearray", "beacon_shape", "beacon_colour", "beacon_opacity", "stroke_weight", "stroke_colour", "arr");
+		$maparray = compact("maptype", "ib_distance", "timezone_conversion", "track_colour", "deletearray", "beacon_shape", "beacon_colour", "beacon_opacity", "stroke_weight", "stroke_colour", "arr");
 
 		$args = array( 'timeout' => 120 );
 
 		$json_feed = wp_remote_get( $json_feed_url, $args );
-		 
-		$viewranger_profile = json_decode( $json_feed['body']);
-		  
-		$complete_profile = array("url" => $viewranger_profile, "maparray" => $maparray);
 
-		return json_encode($complete_profile);
+		if (!(is_wp_error($json_feed))) {
+
+			$viewranger_profile = json_decode( $json_feed['body']);
+		  
+			$complete_profile = array("url" => $viewranger_profile, "maparray" => $maparray);
+
+			return json_encode($complete_profile);
+
+		}
+		 
+		else {
+
+			_e('The ViewRanger API is currently unavailable so no map can be shown. Possible reasons include no / poor internet connection, or the ViewRanger API itself is down.');
+
+		}
 
 	}
 
@@ -377,13 +391,12 @@ class Maps_BuddyBeacon_Public {
 	 *
 	 * @since  0.1.0
 	 */
-    public function register_shortcodes($atts) {
+    public function register_shortcodes() {
 
-    	ob_start();
 		add_shortcode( 'bb_maps', array( $this, 'maps_buddybeacon_shortcode') );
-		return ob_get_clean();
 
 	}
+
  
 
 	/**
@@ -433,6 +446,7 @@ class Maps_BuddyBeacon_Public {
 			}
 
 			wp_enqueue_script('jquery-script-time-moment', plugin_dir_url( __FILE__ ) .'../admin/js/mbb-moment.min.js');
+
 
 			wp_register_script( 'buddybeacon-js', plugin_dir_url( __FILE__ ) . 'js/maps-buddybeacon-public.js', array(), time(), true );
 						

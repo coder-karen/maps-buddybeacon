@@ -176,7 +176,8 @@ class Maps_BuddyBeacon_Admin {
             'type' => '',
             'daterange_from' => '',
             'dateend_choice' => '',
-            'daterange_to' => $dateTime,     
+            'daterange_to' => $dateTime, 
+            'timezone_conversion' => 0,    
             'number_beacons' => '',
             'track_colour' => '#ff0000',
             'beacon_delete_lon' => '',
@@ -185,7 +186,7 @@ class Maps_BuddyBeacon_Admin {
             'beacon_colour' => '#ff0000',
             'beacon_opacity' => '0.8',
             'stroke_weight' => 0,
-           'stroke_colour' => '#ff0000'
+            'stroke_colour' => '#ff0000'
         );
    
  
@@ -318,7 +319,7 @@ class Maps_BuddyBeacon_Admin {
         <!-- Map data table -->
         <table cellspacing="2" cellpadding="5"  class="form-table mapsbb-form-table" >
             <tbody>
-            	<h2 class="table-heading mapsbb-table-heading" >Map data</h2>
+            	<h2 class="table-heading mapsbb-table-heading" ><?php _e('Map data', 'maps-buddybeacon')?></h2>
             	<hr>
 
                 <!-- Form field to echo map shortcode, if map is being edited (id is already set) -->
@@ -361,7 +362,7 @@ class Maps_BuddyBeacon_Admin {
         	                <option value="px" <?php if ($item['mapwidth_type'] === 'px') echo 'selected="true"' ?>>px</option>
 
             	        </select>
-            	        <small>Default is 100%, for a responsive full width map.</small>
+            	        <small><?php _e('Default is 100%, for a responsive full width map.', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -376,7 +377,7 @@ class Maps_BuddyBeacon_Admin {
                             <option value="px" <?php if ($item['mapheight_type'] === 'px') echo 'selected="true"' ?> >px</option>
                             <option value="%" <?php if ($item['mapheight_type'] === '%') echo 'selected="true"' ?> >%</option>
                         </select>
-                        <small>Default is 'auto'.</small>
+                        <small><?php _e("Default is 'auto'.", 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -402,10 +403,10 @@ class Maps_BuddyBeacon_Admin {
                     </th>
                     <td>
                         <select id="type" name="type">
-                            <option value="roadmap" <?php if ($item['type'] === 'roadmap') echo 'selected="true"' ?>>Roadmap</option>
-                            <option value="satellite" <?php if ($item['type'] === 'satellite') echo 'selected="true"' ?>>Satellite</option>
-                            <option value="hybrid" <?php if ($item['type'] === 'hybrid') echo 'selected="true"' ?>>Hybrid</option>
-                            <option value="terrain" <?php if ($item['type'] === 'terrain') echo 'selected="true"' ?>>Terrain</option>
+                            <option value="roadmap" <?php if ($item['type'] === 'roadmap') echo 'selected="true"' ?>><?php _e('Roadmap', 'maps-buddybeacon')?></option>
+                            <option value="satellite" <?php if ($item['type'] === 'satellite') echo 'selected="true"' ?>><?php _e('Satellite', 'maps-buddybeacon')?></option>
+                            <option value="hybrid" <?php if ($item['type'] === 'hybrid') echo 'selected="true"' ?>><?php _e('Hybrid', 'maps-buddybeacon')?></option>
+                            <option value="terrain" <?php if ($item['type'] === 'terrain') echo 'selected="true"' ?>><?php _e('Terrain', 'maps-buddybeacon')?></option>
                         </select>
                     </td>
                 </tr>
@@ -416,7 +417,7 @@ class Maps_BuddyBeacon_Admin {
         <!-- Info Box data table -->
         <table cellspacing="2" cellpadding="5" class="form-table">
             <tbody>
-                <h2 class="table-heading">Info Box Data</h2>
+                <h2 class="table-heading"><?php _e('Info Box Data', 'maps-buddybeacon')?></h2>
                 <hr>   
 
                 <!-- Form field to hide info box underneath map -->
@@ -427,7 +428,7 @@ class Maps_BuddyBeacon_Admin {
                     <td>
                         <!-- Here we are comparing stored value with 1. Stored value is 1 if user checks the checkbox otherwise empty string. -->
                         <input type="checkbox" name="info_box_display" id="info_box_display" value="1" <?php checked(1, $item['info_box_display'],true); ?> /> 
-                        <small>Default (unchecked) means the info box under the map will be visible.</small>
+                        <small><?php _e('Default (unchecked) means the info box under the map will be visible.', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -460,8 +461,8 @@ class Maps_BuddyBeacon_Admin {
                     </th>
                     <td>
                         <select id="ib_distance" name="ib_distance">
-                        <option value="Kilometres" <?php if ($item['ib_distance'] === 'Kilometres') echo 'selected="true"' ?> >Kilometres</option>
-                        <option value="Miles" <?php if ($item['ib_distance'] === 'Miles') echo 'selected="true"' ?> >Miles</option>
+                        <option value="Kilometres" <?php if ($item['ib_distance'] === 'Kilometres') echo 'selected="true"' ?> ><?php _e('Kilometres', 'maps-buddybeacon')?></option>
+                        <option value="Miles" <?php if ($item['ib_distance'] === 'Miles') echo 'selected="true"' ?> ><?php _e('Miles', 'maps-buddybeacon')?></option>
                         </select>
                     </td>
                 </tr>
@@ -469,11 +470,10 @@ class Maps_BuddyBeacon_Admin {
             </tbody>
         </table>
 
-
         <!-- Beacon data table -->
         <table cellspacing="2" cellpadding="5" class="form-table">
             <tbody>
-                <h2 class="table-heading">Beacon Data</h2>
+                <h2 class="table-heading"><?php _e('Beacon Data', 'maps-buddybeacon')?></h2>
                 <hr>   
 
                 <!-- Form field for beacon date range -->
@@ -482,18 +482,69 @@ class Maps_BuddyBeacon_Admin {
                         <label for="daterange_from"><?php _e('Date Range', 'maps-buddybeacon')?></label>
                     </th>
                     <td>
-                        <p>Date/time from:</p>
-                        <input class="datechoice" id="daterange_from" name="daterange_from" type="text" size="100" class="code" placeholder="<?php _e('Start date', 'maps-buddybeacon')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_from'] ?>"><p>Date/time to:</p>
+                        <p><?php _e('Date/time from:', 'maps-buddybeacon')?></p>
+                        <input class="datechoice" id="daterange_from" name="daterange_from" type="text" size="100" class="code" placeholder="<?php _e('Start date', 'maps-buddybeacon')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_from'] ?>"><p><?php _e('Date/time to:', 'maps-buddybeacon')?></p>
                         <select id="dateend_choice" name="dateend_choice" autocomplete="off">
-                            <option id="currentdate" value="currentdate" <?php if ($item['dateend_choice'] === 'currentdate') echo 'selected="true"' ?> >Current date</option>
-                            <option id="selectdate" value="selectdate"  <?php if ($item['dateend_choice'] === 'selectdate') echo 'selected="true"' ?> > Select date</option>
+                            <option id="currentdate" value="currentdate" <?php if ($item['dateend_choice'] === 'currentdate') echo 'selected="true"' ?> ><?php _e('Current date', 'maps-buddybeacon')?></option>
+                            <option id="selectdate" value="selectdate"  <?php if ($item['dateend_choice'] === 'selectdate') echo 'selected="true"' ?> > <?php _e('Select date', 'maps-buddybeacon')?></option>
                         </select>
 
                         <input class="datechoice" id="daterange_to" name="daterange_to" type="hidden"
                        size="100" class="code" placeholder="<?php _e('End date', 'maps-buddybeacon')?>" required data-date-format="YYYY-MM-DD HH:mm:ss" value="<?php echo $item['daterange_to'] ?>">
+                   </br>
+                        <small> <?php _e('When selecting the start and end time note that this is based on the ViewRanger default time (UK time).', 'maps-buddybeacon')?> </small>
                        
                     </td>
                 </tr>
+
+
+          
+
+                <!-- Form field for timezone adjustment -->
+                <tr class="form-field">
+                    <th valign="top" scope="row">
+                        <label for="timezone_conversion"><?php _e('Timezone Adjustment', 'maps-buddybeacon')?></label>
+                    </th>
+                    <td>
+                        <p><?php _e('Select the adjustment for your timezone for accurate beacon times.', 'maps-buddybeacon')?></p>
+                        <select id="timezone_conversion" name="timezone_conversion" autocomplete="off">
+                            <option id="uktime" value="0" <?php if ($item['timezone_conversion'] === '0') echo 'selected="true"' ?> ><?php _e('Default time', 'maps-buddybeacon')?></option>
+                            <option id="timeplus1" value="1"  <?php if ($item['timezone_conversion'] === '1') echo 'selected="true"' ?> > <?php _e('Default plus 1 hour', 'maps-buddybeacon')?></option>
+                            <option id="timeplus2" value="2"  <?php if ($item['timezone_conversion'] === '2') echo 'selected="true"' ?> > <?php _e('Default plus 2 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus3" value="3"  <?php if ($item['timezone_conversion'] === '3') echo 'selected="true"' ?> > <?php _e('Default plus 3 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus4" value="4"  <?php if ($item['timezone_conversion'] === '4') echo 'selected="true"' ?> > <?php _e('Default plus 4 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus5" value="5"  <?php if ($item['timezone_conversion'] === '5') echo 'selected="true"' ?> > <?php _e('Default plus 5 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus6" value="6"  <?php if ($item['timezone_conversion'] === '6') echo 'selected="true"' ?> > <?php _e('Default plus 6 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus7" value="7"  <?php if ($item['timezone_conversion'] === '7') echo 'selected="true"' ?> > <?php _e('Default plus 7 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus8" value="8"  <?php if ($item['timezone_conversion'] === '8') echo 'selected="true"' ?> > <?php _e('Default plus 8 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus9" value="9"  <?php if ($item['timezone_conversion'] === '9') echo 'selected="true"' ?> > <?php _e('Default plus 9 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus10" value="10"  <?php if ($item['timezone_conversion'] === '10') echo 'selected="true"' ?> > <?php _e('Default plus 10 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus11" value="11"  <?php if ($item['timezone_conversion'] === '11') echo 'selected="true"' ?> > <?php _e('Default plus 11 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus12" value="12"  <?php if ($item['timezone_conversion'] === '12') echo 'selected="true"' ?> > <?php _e('Default plus 12 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus13" value="13"  <?php if ($item['timezone_conversion'] === '13') echo 'selected="true"' ?> > <?php _e('Default plus 13 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeplus14" value="14"  <?php if ($item['timezone_conversion'] === '14') echo 'selected="true"' ?> > <?php _e('Default plus 14 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus1" value="-1"  <?php if ($item['timezone_conversion'] === '-1') echo 'selected="true"' ?> > <?php _e('Default minus 1 hour', 'maps-buddybeacon')?></option>
+                            <option id="timeminus2" value="-2"  <?php if ($item['timezone_conversion'] === '-2') echo 'selected="true"' ?> > <?php _e('Default minus 2 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus3" value="-3"  <?php if ($item['timezone_conversion'] === '-3') echo 'selected="true"' ?> > <?php _e('Default minus 3 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus4" value="-4"  <?php if ($item['timezone_conversion'] === '-4') echo 'selected="true"' ?> > <?php _e('Default minus 4 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus5" value="-5"  <?php if ($item['timezone_conversion'] === '-5') echo 'selected="true"' ?> > <?php _e('Default minus 5 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus6" value="-6"  <?php if ($item['timezone_conversion'] === '-6') echo 'selected="true"' ?> > <?php _e('Default minus 6 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus7" value="-7"  <?php if ($item['timezone_conversion'] === '-7') echo 'selected="true"' ?> > <?php _e('Default minus 7 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus8" value="-8"  <?php if ($item['timezone_conversion'] === '-8') echo 'selected="true"' ?> > <?php _e('Default minus 8 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus9" value="-9"  <?php if ($item['timezone_conversion'] === '-9') echo 'selected="true"' ?> > <?php _e('Default minus 9 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus10" value="-10"  <?php if ($item['timezone_conversion'] === '-10') echo 'selected="true"' ?> > <?php _e('Default minus 10 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus11" value="-11"  <?php if ($item['timezone_conversion'] === '-11') echo 'selected="true"' ?> > <?php _e('Default minus 11 hours', 'maps-buddybeacon')?></option>
+                            <option id="timeminus12" value="-12"  <?php if ($item['timezone_conversion'] === '-12') echo 'selected="true"' ?> > <?php _e('Default minus 12 hours', 'maps-buddybeacon')?></option>   
+
+                        </select>
+                        <br>
+                        <small> <?php _e('The ViewRanger default is the current UK time, which at page refresh is ', 'maps-buddybeacon')?> </small>
+                        <small id="ukcurrenttime"><script>var event = new Date(); var time = event.toLocaleTimeString('en-GB', { timeZone: 'Europe/London' });
+                            document.getElementById("ukcurrenttime").innerHTML = time; 
+                    </script></small>
+                    </td>
+                </tr>
+
 
                 <!-- Form field for max number of beacons -->
                 <tr class="form-field">
@@ -503,7 +554,8 @@ class Maps_BuddyBeacon_Admin {
                     <td>
                         <input id="number_beacons" name="number_beacons" type="text"  value="<?php if (esc_attr($item['number_beacons']) == 0 ) echo ''; else echo esc_attr($item['number_beacons'])?>"
                                size="50" class="code" placeholder="<?php _e('Max. number beacons', 'maps-buddybeacon')?>">
-                        <small> Maximum number of beacons to display. Default (empty) is no max.</small>
+                               <br>
+                        <small> <?php _e('Maximum number of beacons to display. Default (empty) is no max. Note - these start from the most recent and go back in time, not factoring in deleted beacons.</', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -528,7 +580,8 @@ class Maps_BuddyBeacon_Admin {
                                size="50" class="code" placeholder="<?php _e('Enter longitude of beacon', 'maps-buddybeacon')?>">
                                 <input id="beacon_delete_lat" name="beacon_delete_lat" type="text"  value="<?php echo ($item['beacon_delete_lat'])?>"
                                size="50" class="code" placeholder="<?php _e('Enter latitude of beacon', 'maps-buddybeacon')?>" >
-                               <br/><small>Enter the latitude and longitude exactly as they appear in the map Info Window for the beacon you wish to delete.</small>
+                               <br/><small><?php _e('Enter the latitude and longitude exactly as they appear in the map Info Window for the beacon you wish to delete.', 'maps-buddybeacon')?></small>
+                                <br/><small><?php _e('Refresh the map after submitting each beacon for deletion in order for changes to take effect.', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
                 
@@ -537,7 +590,7 @@ class Maps_BuddyBeacon_Admin {
                 <!-- Beacon style sub-heading -->
                 <tr class="form-field">
                     <th valign="top" scope="row">
-                        <h4 class="table-sub-heading">Beacon Style</h4>
+                        <h4 class="table-sub-heading"><?php _e('Beacon Style', 'maps-buddybeacon')?></h4>
                     </th>
                 </tr>
 
@@ -548,8 +601,8 @@ class Maps_BuddyBeacon_Admin {
                     </th>
                     <td>
                         <select id="beacon_shape" name="beacon_shape">
-                            <option value="Circle" <?php if ($item['beacon_shape'] === 'Circle') echo 'selected="true"' ?> >Circle</option>
-                            <option value="Square" <?php if ($item['beacon_shape'] === 'Square') echo 'selected="true"' ?> >Square</option>
+                            <option value="Circle" <?php if ($item['beacon_shape'] === 'Circle') echo 'selected="true"' ?> ><?php _e('Circle', 'maps-buddybeacon')?></option>
+                            <option value="Square" <?php if ($item['beacon_shape'] === 'Square') echo 'selected="true"' ?> ><?php _e('Square', 'maps-buddybeacon')?></option>
                         </select>
                     </td>
                 </tr>
@@ -584,7 +637,7 @@ class Maps_BuddyBeacon_Admin {
                             <option value="0.9" <?php if ($item['beacon_opacity'] === '0.9') echo 'selected="true"' ?> >0.9</option>
                             <option value="1" <?php if ($item['beacon_opacity'] === '1') echo 'selected="true"' ?> >1</option>
                         </select>
-                        <small>The lower the value, the more transparent the beacon fill colour.</small>
+                        <small><?php _e('The lower the value, the more transparent the beacon fill colour.', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -596,7 +649,7 @@ class Maps_BuddyBeacon_Admin {
                     <td>
                         <input id="stroke_weight" name="stroke_weight" type="text" value="<?php echo esc_attr($item['stroke_weight'])?>"
                                size="50" class="code" placeholder="<?php _e('Stroke Weight', 'maps-buddybeacon')?>" required>
-            	       <small>Beacon border size, in px. Default is 0 (no border).</small>
+            	       <small><?php _e('Beacon border size, in px. Default is 0 (no border).', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -608,7 +661,7 @@ class Maps_BuddyBeacon_Admin {
                     <td>
                         <input id="stroke_colour" name="stroke_colour" type="color"  value="<?php echo ($item['stroke_colour'])?>"
                                size="100" class="code" placeholder="<?php _e('Stroke Colour', 'maps-buddybeacon')?>" required>
-                        <small>Beacon border colour.</small>
+                        <small><?php _e('Beacon border colour.', 'maps-buddybeacon')?></small>
                     </td>
                 </tr>
 
@@ -823,6 +876,23 @@ class Maps_BuddyBeacon_Admin {
 
                 }
 
+                if ('maps-buddybeacon_bbuser' == $key && ($input[$key] != '') ) {
+
+                    $response = filter_var($input[$key], FILTER_VALIDATE_EMAIL);
+              //     var_dump($response);
+                    if ($response === false) {
+                        add_settings_error(
+                            'maps-buddybeacon_bbuser',
+                            'user-not-email',
+                            'BuddyBeacon username must be a valid email address',
+                            'error'
+                        );
+                        $input[$key] = '';
+
+                    }
+
+                }
+
                 // Strip all HTML and PHP tags and properly handle quoted strings
                 $output[$key] = strip_tags( stripslashes( $input[ $key ] ) );
 
@@ -899,12 +969,12 @@ class Maps_BuddyBeacon_Admin {
         $field_id = $args['label_for'];
         $name = $this->plugin_name . '-settings[' . $field_id . ']';
         $options = get_option('maps-buddybeacon-settings');
-         
         ?>
 
-        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php echo esc_attr($options[$field_id]) ; ?>" class="regular-text" />
+        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php if (isset($options[$field_id])) { echo esc_attr($options[$field_id]) ; } else { echo '';} ?>" class="regular-text" />
         <small>
             <?php 
+
             $url = "//developers.google.com/maps/documentation/javascript/"; 
             echo sprintf( wp_kses( __( 'Create a <a href="%s" target="_blank">Google Maps API Key</a>.', 'maps-buddybeacon' ), array(  'a' => array( 'href' => array(), 'target' => array() ) ) ), esc_url( $url ) );
             ?>
@@ -927,7 +997,7 @@ class Maps_BuddyBeacon_Admin {
 
     	?>
 	   
-		<input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php echo esc_attr($options[$field_id]) ; ?>" class="regular-text" />
+		<input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php if (isset($options[$field_id])) { echo esc_attr($options[$field_id]) ; } else { echo '';} ?>" class="regular-text" />
         <small>
             <?php 
             $url = "//www.viewranger.com/developers/register/"; 
@@ -952,9 +1022,11 @@ class Maps_BuddyBeacon_Admin {
 
         ?>
        
-        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php echo esc_attr($options[$field_id]) ; ?>" class="regular-text" />
+        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php if (isset($options[$field_id])) { echo esc_attr($options[$field_id]) ; } else { echo '';} ?>" class="regular-text" />
+
 
     	<?php
+
     }
 
 
@@ -970,9 +1042,23 @@ class Maps_BuddyBeacon_Admin {
         $options = get_option('maps-buddybeacon-settings');
         ?>
        
-        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php echo esc_attr($options[$field_id]) ; ?>" class="regular-text" max-length="4" />
+        <input type="text" name="<?php echo $name; ?>" id="<?php echo $name ?>" value="<?php if (isset($options[$field_id])) { echo esc_attr($options[$field_id]) ; } else { echo '';} ?>" class="regular-text" max-length="4" />
 
 	   <?php
+    }
+
+
+    /**
+     * Rerun the activation hook if the version number isn't correct
+     *
+     * @since    0.1.0
+     */
+    function mb_rerun_activation() {
+
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'inc/class-maps-buddybeacon-activator.php';
+        Maps_BuddyBeacon_Activator::activate();        
+    
+        
     }
 
 
@@ -983,14 +1069,17 @@ class Maps_BuddyBeacon_Admin {
 	 */
 	public function enqueue_styles() {
 
+        
 
         wp_enqueue_style('jquery-style',  plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
 
-        wp_enqueue_style('jquery-style-boot',  plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
+        wp_enqueue_style( 'jquery-style-boot', '//stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css' );
 
-        wp_enqueue_style('jquery-style-time',  plugin_dir_url( __FILE__ ) . 'css/bootstrap-datetimepicker.css');
 
-        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/maps-buddybeacon-admin.css', array(), $this->version, 'all' );
+        wp_enqueue_style('jquery-style-time', '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css' );
+
+        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/maps-buddybeacon-admin.css', array('jquery-style-time'), $this->version, 'all' );
+
 
     }
 
@@ -1006,7 +1095,9 @@ class Maps_BuddyBeacon_Admin {
 
         wp_enqueue_script('jquery-script-time-moment', plugin_dir_url( __FILE__ ) .'js/mbb-moment.min.js');
 
-        wp_enqueue_script('jquery-script-time', plugin_dir_url( __FILE__ ) .'js/mbb-bootstrap-datetimepicker.min.js');
+        wp_enqueue_script('jquery-script-time-moment-timezone', '//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js', array(), null, true);
+
+        wp_enqueue_script( 'jquery-script-time', '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js', array(), null, true );
 
 	}
 

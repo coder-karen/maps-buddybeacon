@@ -29,6 +29,12 @@ class Maps_BuddyBeacon_Activator {
 	 */
 	public static function activate() {
 
+    if(!function_exists('wp_get_current_user')) {
+      
+      include(ABSPATH . 'wp-includes/pluggable.php');
+    
+    }
+
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 
             return;
@@ -36,9 +42,16 @@ class Maps_BuddyBeacon_Activator {
         }
 
     global $wpdb;
+
+
+    update_option('mb_plugin_version', MAPS_BUDDYBEACON_VERSION);
+
+
+    $charset_collate = $wpdb->get_charset_collate();
+
     $table_name = $wpdb->prefix . 'mapsbb'; 
 
-    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+    $sql = "CREATE TABLE $table_name (
       id int(11) NOT NULL AUTO_INCREMENT,
       maptitle tinytext NOT NULL,
       mapwidth int(11) NULL,
@@ -54,6 +67,7 @@ class Maps_BuddyBeacon_Activator {
       daterange_from datetime(6) NULL,
       dateend_choice varchar(20) NOT NULL,
       daterange_to datetime(6) NOT NULL,
+      timezone_conversion int(11) NULL,
       number_beacons int(11) NULL,
       track_colour varchar(10) NOT NULL,
       beacon_delete_lon varchar(20) NULL,
@@ -64,11 +78,12 @@ class Maps_BuddyBeacon_Activator {
       stroke_weight int(11) NULL,
       stroke_colour varchar(10) NOT NULL,
       PRIMARY KEY  (id)
-    );";
+    ) $charset_collate;";
 
 
     require_once(ABSPATH.'wp-admin/includes/upgrade.php');
     dbDelta($sql);
+
 		
 	}
 

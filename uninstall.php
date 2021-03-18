@@ -24,12 +24,14 @@ function maps_buddybeacon_delete_tables() {
 
 $settings_option = 'maps-buddybeacon-settings'; 
 $delete_option = 'bbmaps-delete_array';
+$version_option = 'mb_plugin_version';
 delete_option($settings_option);
+delete_option($delete_option);
+delete_option($version_option);
  // for site options in Multisite
 delete_site_option($settings_option);
-delete_option($delete_option);
- // for site options in Multisite
 delete_site_option($delete_option);
+delete_site_option($version_option);
 
 maps_buddybeacon_delete_tables();
 

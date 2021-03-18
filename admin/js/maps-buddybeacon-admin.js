@@ -1,15 +1,15 @@
 (function( $ ) {
 	'use strict';
 
-  const $bookingdateto = '#daterange_to';  
-  const $bookingdatefrom = '#daterange_from';  
+  const $daterangeto = '#daterange_to';  
+  const $daterangefrom = '#daterange_from';  
 
   // If 'select date' is chose, show input field, otherwise hide and set to current date.
   $(function () {
 
     $("#dateend_choice").change(function() {
 
-      var val = $(this).val();
+      let val = $(this).val();
 
       if(val === "selectdate") {
         //show input field
@@ -19,9 +19,9 @@
       else if (val === "currentdate") {
         //set datepicker to current date
 
-    		var $myDate =  moment().format("YYYY-MM-DD HH:mm:ss");
+    		 const $myDate =  moment().format("YYYY-MM-DD HH:mm:ss");
 
-  		  $($bookingdateto).prop('value', $myDate);
+  		  $($daterangeto).prop('value', $myDate);
         $("#daterange_to").prop('type', 'hidden');
       }
 
@@ -41,7 +41,6 @@
 
           else {
           	$(".info-box-info").css("display", "table-row");
-             console.log("supposed to show");
           }
 
         });
@@ -58,21 +57,21 @@
   // Show the 'date from' datepicker when input field is clicked
 	$(function(){
 
-    $($bookingdatefrom).datetimepicker();
-    $($bookingdatefrom).datetimepicker('hide');
+    $($daterangefrom).datetimepicker();
+    $($daterangefrom).datetimepicker('hide');
 
-    $($bookingdatefrom).click(function() {
+    $($daterangefrom).click(function() {
 
-      $($bookingdatefrom).datetimepicker({
+      $($daterangefrom).datetimepicker({
     		inline: true,
         sideBySide: true,
         widgetPositioning: {
-          horizontal: 'auto',
+          horizontal: 'left',
           vertical: 'bottom'
         },            
       });
 
-      $($bookingdatefrom).datetimepicker('show');		 
+      $($daterangefrom).datetimepicker('show');		 
 
     });
      
@@ -82,13 +81,13 @@
   // Show the 'date to' datepicker when input field is clicked
 	$(function(){
 
-    var $bookingdate = '#daterange_to';  
-    $($bookingdateto).datetimepicker();
-    $($bookingdateto).datetimepicker('hide');
+   // const $daterangeto = '#daterange_to';  
+    $($daterangeto).datetimepicker();
+    $($daterangeto).datetimepicker('hide');
 
-    $($bookingdateto).click(function() {
+    $($daterangeto).click(function() {
 
-      $($bookingdateto).datetimepicker({
+      $($daterangeto).datetimepicker({
         inline: true,
         sideBySide: true,
         widgetPositioning: {
@@ -97,7 +96,7 @@
         },            
       });
 
-      $($bookingdateto).datetimepicker('show');    
+      $($daterangeto).datetimepicker('show');    
 
     });
      
@@ -107,7 +106,7 @@
   //Make sure that if 'select date' is pre-selected, the input field shows.
 	$(function(){
 
-	 	var $dateendvalue = $("#dateend_choice").val();
+	 	const $dateendvalue = $("#dateend_choice").val();
 	 	
     if  ($dateendvalue === "selectdate") {
 
@@ -123,4 +122,3 @@
 
 
 })( jQuery );
-
