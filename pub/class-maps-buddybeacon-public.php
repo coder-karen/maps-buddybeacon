@@ -83,133 +83,139 @@ class Maps_BuddyBeacon_Public {
 	            $mapid = $atts['id'];
 	
 	          
-            	$googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
-
+				$googleapi = isset(get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi']) ? get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'] : '';
 	            //Map variables
 	            $item = $this->get_map_variables($mapid);
-	            $id = $item['id'];
-				$maptitle = $item['maptitle'];
-				$mapwidth = $item['mapwidth'];
-				$mapwidth_type = $item['mapwidth_type'];
-				$mapheight = $item['mapheight'];
-				$mapheight_type = $item['mapheight_type'];
-				$mapalignment = $item['alignment'];
-				$info_box_display = $item['info_box_display'];
-				$ib_background = $item['ib_background'];
-				$ib_text = $item['ib_text'];
-				$datefrom = $item['daterange_from'];
-				$dateto = $item['daterange_to'];
+	            if( is_array($item) ) {
+
+		            $id = $item['id'];
+					$maptitle = $item['maptitle'];
+					$mapwidth = $item['mapwidth'];
+					$mapwidth_type = $item['mapwidth_type'];
+					$mapheight = $item['mapheight'];
+					$mapheight_type = $item['mapheight_type'];
+					$mapalignment = $item['alignment'];
+					$info_box_display = $item['info_box_display'];
+					$ib_background = $item['ib_background'];
+					$ib_text = $item['ib_text'];
+					$datefrom = $item['daterange_from'];
+					$dateto = $item['daterange_to'];
+
+				
 
 
-				//Check if mapwidth is set and if not default to 100.
-				if ($mapwidth == 0) {
-					$mapwidth = 100;
-					$mapwidth_type = '%';
-				}
+					//Check if mapwidth is set and if not default to 100.
+					if ($mapwidth == 0) {
+						$mapwidth = 100;
+						$mapwidth_type = '%';
+					}
 
-				//Check if mapheight is set and if not default to auto.
-				if ($mapheight == 0) {
-					$mapheight = 'auto';
-				}
+					//Check if mapheight is set and if not default to auto.
+					if ($mapheight == 0) {
+						$mapheight = 'auto';
+					}
 
-				$footeralignmentcode = '';
-
-
-				//Check map alignment and create CSS accordingly
-				if ($mapalignment == 'Left') {
-					$alignmentcode = $footeralignmentcode = 'clear:both;';
-				}
-				if ($mapalignment == 'Right') {
-					$alignmentcode = $footeralignmentcode = 'clear:both;';
-				}
-				if ($mapalignment == 'Center') {
-					$alignmentcode = 'margin: 10px auto 0;';
-					$footeralignmentcode = 'margin: 0 auto 10px !important;';
-				}
-				if ($mapalignment == 'None') {
-					$alignmentcode = $footeralignmentcode = '';
-				}
+					$footeralignmentcode = '';
 
 
-				//Convert date from and current date to usable strings
-				$fromtime = strtotime($datefrom);
-				$datefromstring = date("D, d M Y", $fromtime);
-				$dateend_choice = $item['dateend_choice'];
+					//Check map alignment and create CSS accordingly
+					if ($mapalignment == 'Left') {
+						$alignmentcode = $footeralignmentcode = 'clear:both;';
+					}
+					if ($mapalignment == 'Right') {
+						$alignmentcode = $footeralignmentcode = 'clear:both;';
+					}
+					if ($mapalignment == 'Center') {
+						$alignmentcode = 'margin: 10px auto 0;';
+						$footeralignmentcode = 'margin: 0 auto 10px !important;';
+					}
+					if ($mapalignment == 'None') {
+						$alignmentcode = $footeralignmentcode = '';
+					}
 
-	  			if ($dateend_choice == 'currentdate') {
 
-	  				$dateendstring = "current";
+					//Convert date from and current date to usable strings
+					$fromtime = strtotime($datefrom);
+					$datefromstring = date("D, d M Y", $fromtime);
+					$dateend_choice = $item['dateend_choice'];
 
-				}
-	  			else {
+		  			if ($dateend_choice == 'currentdate') {
 
-	  				//The date that the mapped route ended
-		  			$totime = strtotime($dateto);
-					$dateendstring = date("D, d M Y", $totime);
+		  				$dateendstring = "current";
 
-			  	}
+					}
+		  			else {
 
-			  	//If 'Hide info box' was checked
-			  	if ($info_box_display == '1') {
+		  				//The date that the mapped route ended
+			  			$totime = strtotime($dateto);
+						$dateendstring = date("D, d M Y", $totime);
 
-			  		$mapfooter = "style='display:none;'";
-			  		$alignmentcode = $alignmentcode . ' margin-bottom:10px;';
+				  	}
 
-			  	} 
+				  	//If 'Hide info box' was checked
+				  	if ($info_box_display == '1') {
 
-			  	else {
+				  		$mapfooter = "style='display:none;'";
+				  		$alignmentcode = $alignmentcode . ' margin-bottom:10px;';
 
-			  	//Style for map footer
-			  	$mapfooter = "style='color: ".$ib_text."; background-color: ".$ib_background."; width: " . $mapwidth.$mapwidth_type . "; " . $footeralignmentcode . "'";
+				  	} 
 
-			  	}
+				  	else {
 
-			  	// If the database map id matches the shortcode id and the googleapi field is not empty
-	            if (($mapid == $id) && ($googleapi != '') ) {
+				  	//Style for map footer
+				  	$mapfooter = "style='color: ".$ib_text."; background-color: ".$ib_background."; width: " . $mapwidth.$mapwidth_type . "; " . $footeralignmentcode . "'";
 
-	            	// Finding and decoding the JSON from the ViewRanger api url
-	            	$params = $this->viewranger_get_profile($mapid);
-	               	$jsonparams = json_decode($params);
+				  	}
 
-	               	// If the ViewRanger api url produces valid JSON
-	               	if (!isset($jsonparams->url->VIEWRANGER->ERROR)) {
+					 
 
-		            	?>
-						<!-- This script addition ensures that initMap is defined as a function in time -->
-						<script type="text/javascript">
-							window.initMap = function() {}
-			
-						</script>
-						<?php
-	              		// Enqueue our buddybeacon-js script and google maps
-	              		wp_enqueue_script('buddybeacon-js');
-	              		wp_enqueue_script( 'google-maps');
+				  	// If the database map id matches the shortcode id and the googleapi field is not empty
+		            if (($mapid == $id) && ($googleapi != '') ) {
 
-	              		// Send all the JSON map and ViewRanger variables to Javascript
-	              		wp_localize_script( 'buddybeacon-js', 'php_vars', $params);
-	              		wp_localize_script( 'buddybeacon-js', 'php_vars'.$mapid , $params);
-		              		    	
-	              		//Write out the content of the distanceinkm variable to the page
-	              		$distanceinkm = 'echo <script>document.writeln(distanceinkm);</script>';
+		            	// Finding and decoding the JSON from the ViewRanger api url
+		            	$params = $this->viewranger_get_profile($mapid);
+		               	$jsonparams = json_decode($params);
 
-	              		$theid = $atts['id'];
-		         
-		            	$content = "<div class='mapsbb-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='mapsbb-footer' " . $mapfooter . "><div class='mapsbb-summary' ><p class='mapsbb-footer-title'>" . $maptitle .  "</p><p class='mapsbb-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='mapsbb-footer-distance".$theid."' ></p></div></div>";					
+		               	// If the ViewRanger api url produces valid JSON
+		               	if (!isset($jsonparams->url->VIEWRANGER->ERROR)) {
 
-		            	$content .= ob_get_contents();
-		            	ob_end_clean();
-		            	return $content;
+			            	?>
+							<!-- This script addition ensures that initMap is defined as a function in time -->
+							<script type="text/javascript">
+								window.initMap = function() {}
+				
+							</script>
+							<?php
+		              		// Enqueue our buddybeacon-js script and google maps
+		              		wp_enqueue_script('buddybeacon-js');
+		              		wp_enqueue_script( 'google-maps');
 
-					}	
+		              		// Send all the JSON map and ViewRanger variables to Javascript
+		              		wp_localize_script( 'buddybeacon-js', 'php_vars', $params);
+		              		wp_localize_script( 'buddybeacon-js', 'php_vars'.$mapid , $params);
+			              		    	
+		              		//Write out the content of the distanceinkm variable to the page
+		              		$distanceinkm = 'echo <script>document.writeln(distanceinkm);</script>';
 
-            	}
-            
+		              		$theid = $atts['id'];
+			         
+			            	$content = "<div class='mapsbb-canvas' id='".$atts['id'] ."' style='width: " . $mapwidth.$mapwidth_type . "; height: " .$mapheight.$mapheight_type . "; " . $alignmentcode . "'></div><div class='mapsbb-footer' " . $mapfooter . "><div class='mapsbb-summary' ><p class='mapsbb-footer-title'>" . $maptitle .  "</p><p class='mapsbb-footer-text'>" . $datefromstring . " - " . $dateendstring . "</p><p class='bb-map-footer-distance' id='mapsbb-footer-distance".$theid."' ></p></div></div>";					
 
-            	else {
+			            	$content .= ob_get_contents();
+			            	ob_end_clean();
+			            	return $content;
 
-					return;
+						}	
 
-				}
+	            	}
+	            
+
+	            	else {
+
+						return;
+
+					}
+				} // end if $item is array
 
 			}
 
@@ -437,7 +443,7 @@ class Maps_BuddyBeacon_Public {
 	 */
 	public function enqueue_scripts() {
 
-		$googleapi = get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'];
+		$googleapi = isset(get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi']) ? get_option('maps-buddybeacon-settings')['maps-buddybeacon_googleapi'] : '';
 
 		if (($googleapi)  != '') {
 

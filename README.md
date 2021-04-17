@@ -4,7 +4,7 @@
 **Tags:** google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode  
 **Requires at least:** 4.4  
 **Tested up to:** 5.7  
-**Stable tag:** 1.1.0  
+**Stable tag:** 1.1.1  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -76,6 +76,9 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 
 ## Changelog 
 
+### 1.1.1
+* Implementing a fix for a PHP warning in PHP 8.0
+
 ### 1.1.0
 * Added ability to make adjustments to beacon times based on different timezones
 * BuddyBeacon username field (on settings page) now validates whether an email address has been entered or not
@@ -94,6 +97,9 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 * Initial release
 
 ## Upgrade Notice 
+
+### 1.1.1
+* Implementing a fix for a PHP warning in PHP 8.0
 
 ### 1.1.0
 * Adds ability to make adjustments to beacon times based on different timezones, plus a few settings display fixes and more helpful guidance notes.
