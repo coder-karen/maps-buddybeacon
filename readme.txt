@@ -3,9 +3,9 @@ Contributors: wpkaren
 Donate Link: https://karenattfield.com/giving/
 Tags: google maps, viewranger, buddybeacon, live maps, map routes, live tracking, shortcode
 Requires at least: 4.4
-Tested up to: 5.7
+Tested up to: 5.8.1
 Requires PHP: 5.6.25
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,9 +71,11 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 
 == Changelog ==
 
+= 1.1.2 =
+* Refactoring front end JavaScript for better performance
+
 = 1.1.1 = 
 * Implementing a fix for a PHP warning in PHP 8.0
-
 
 = 1.1.0 = 
 * Added ability to make adjustments to beacon times based on different timezones
@@ -84,8 +86,6 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 * Fixing the display issue with the datetimepicker to make sure the calendars open next to their respective input fields
 * Added a troubleshooting section to the 'How to use' page
 
-
-
 = 1.0.0 =
 * First stable release
 * Editing map route: adding beacon to start of route
@@ -95,6 +95,9 @@ Feel free to get in touch with any ideas you have, or even better contribute to 
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.1.2 = 
+* Refactoring front end JavaScript for better performance
 
 = 1.1.1 = 
 * Implementing a fix for a PHP warning in PHP 8.0
