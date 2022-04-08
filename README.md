@@ -10,6 +10,8 @@
 
 Serving map tracks in real time via ViewRanger BuddyBeacon.
 
+**Update April 2022: The Maps for BuddyBeacon plugin is no longer available via the WordPress.org plugin repository. The decision to remove it was made because the ViewRanger API that it is based on is no longer functional in the same way. OutdoorActive now own BuddyBeacon but the information available via their API won't allow past beacon data to be shared, which was the basis for this plugin. It is still available (and will remain available) to download here, from GitHub, if you have old beacon data that you want to continue to display.**
+
 
 ## Description 
 
